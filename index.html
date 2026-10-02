@@ -1,0 +1,1997 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Đặc điểm của chất và sự biến đổi trạng thái | YooBook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ========================================
+   LESSON SHELL
+======================================== */
+:root{
+  --brand:#195856; --brand-dark:#0f3f3d; --brand-light:#2f827d; --brand-soft:#e6f0ee;
+  --ink:#10302d; --muted:#5f8b89; --line:#dbe8e5; --bg:#eaf3f1; --gold:#a8814a;
+  --stage-mid:#f1f9f7; --stage-bottom:#dcebe7;
+  --ok:#2f9a64; --ok-soft:#e4f5ec; --danger:#ad493f; --danger-soft:#fbe8e5;
+  --solid:#8b6a4c; --solid-soft:#f4ece4; --liquid:#2a78b8; --liquid-soft:#e5f0fa; --gas:#5f7f99; --gas-soft:#ecf1f6;
+  --r:16px; --r-sm:11px;
+  --sh-1:0 1px 2px rgba(13,42,40,.05);
+  --sh-2:0 2px 6px rgba(13,42,40,.06),0 18px 34px -22px rgba(13,42,40,.45);
+  --sh-3:0 10px 30px -12px rgba(13,42,40,.32);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{
+  font-family:'Roboto',system-ui,-apple-system,Segoe UI,sans-serif;
+  font-size:15px;line-height:1.5;color:var(--ink);background:#195658;
+  overflow:hidden;overscroll-behavior:none;-webkit-tap-highlight-color:transparent;
+}
+button{font-family:inherit}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.app{height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+.topbar{
+  display:flex;align-items:center;gap:12px;padding:10px 16px;background:#fff;
+  border-bottom:1px solid var(--line);box-shadow:var(--sh-1);z-index:20;flex:0 0 auto;
+}
+.logoclip{height:27px;display:flex;align-items:center;flex:0 0 auto}
+.logo{height:27px;display:block}
+.titles{flex:1;min-width:0}
+.badge{
+  display:inline-block;max-width:100%;font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--brand);
+  background:var(--brand-soft);border-radius:99px;padding:2px 9px;margin-bottom:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:top;
+}
+.titles h1{margin:0;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.titles h1.lg{font-size:18px} .titles h1.sm{font-size:15px;display:none}
+@media (max-width:620px){.titles h1.lg{display:none}.titles h1.sm{display:block}}
+.tb-right{display:flex;gap:8px;flex:0 0 auto}
+.tb-btn{
+  width:38px;height:38px;border-radius:11px;border:1px solid var(--line);background:#fff;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--brand-dark);
+}
+.tb-btn:hover{background:var(--brand-soft);border-color:var(--brand-light)}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;padding:14px;overflow:hidden}
+@media (max-width:920px){.main{padding:10px}}
+@media (max-width:620px){.main{padding:6px}}
+.stagecol{display:flex;flex-direction:column;flex:1;min-height:0;min-width:0}
+.frame{background:#fff;border-radius:var(--r);box-shadow:var(--sh-2);display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden}
+.stage{position:relative;flex:1;min-height:0;background:#195658;overflow:hidden}
+.vignette{position:absolute;inset:0;z-index:1;pointer-events:none;box-shadow:inset 0 0 90px rgba(15,63,61,.10)}
+.stage-tools{position:absolute;left:12px;top:12px;z-index:8;display:flex;gap:8px;flex-wrap:wrap}
+.ghost{
+  background:rgba(255,255,255,.90);backdrop-filter:blur(8px) saturate(1.3);border:1px solid var(--line);
+  border-radius:var(--r-sm);padding:7px 11px;font-size:12.5px;font-weight:500;color:var(--brand-dark);
+  cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:var(--sh-1);min-height:34px
+}
+.ghost[aria-pressed="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
+.stage-hint{
+  position:absolute;right:12px;top:12px;z-index:8;max-width:46%;background:rgba(255,255,255,.90);backdrop-filter:blur(8px) saturate(1.3);
+  border-radius:99px;padding:7px 13px;font-size:12.5px;font-weight:500;color:var(--brand-dark);box-shadow:var(--sh-1);
+  display:flex;align-items:center;gap:6px;pointer-events:none
+}
+@media (max-width:620px){.stage-hint{display:none}}
+.stage-nav{
+  position:absolute;top:50%;z-index:30;transform:translateY(-50%);width:38px;height:38px;border-radius:99px;
+  border:1px solid var(--line);background:rgba(255,255,255,.88);backdrop-filter:blur(8px) saturate(1.3);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--brand-dark);box-shadow:var(--sh-1);font-size:16px
+}
+.stage-nav.prev{left:12px} .stage-nav.next{right:12px} .stage-nav[disabled]{opacity:.3;pointer-events:none}
+.stage-nav.next.ready{background:var(--brand);color:#fff;border-color:var(--brand);animation:navPulse 1.5s ease-in-out infinite}
+@keyframes navPulse{0%,100%{box-shadow:0 0 0 0 rgba(168,129,74,0)}50%{box-shadow:0 0 0 8px rgba(168,129,74,.38)}}
+@media (max-width:920px){.stage-nav{width:34px;height:34px;font-size:14px}}
+@media (max-width:620px){.stage-nav.prev{left:8px}.stage-nav.next{right:8px}}
+@media (pointer:coarse){.stage-nav{width:40px;height:40px}}
+.steps{
+  position:relative;display:flex;gap:8px;padding:10px 12px;overflow-x:auto;overflow-y:hidden;border-top:1px solid var(--line);
+  scrollbar-width:none;flex:0 0 auto;-webkit-overflow-scrolling:touch;touch-action:pan-x
+}
+.steps::-webkit-scrollbar{display:none}
+.step{
+  flex:0 0 auto;display:flex;align-items:center;gap:7px;padding:7px 13px 7px 8px;border-radius:99px;border:1px solid var(--line);
+  background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:var(--ink);white-space:nowrap
+}
+.step b{min-width:22px;height:22px;padding:0 4px;border-radius:99px;background:var(--brand-soft);color:var(--brand-dark);font-size:11px;display:flex;align-items:center;justify-content:center}
+.step[aria-selected="true"]{background:var(--brand);border-color:var(--brand);color:#fff;animation:stepJump .28s ease}
+@keyframes stepJump{0%{transform:scale(.96)}70%{transform:scale(1.035)}100%{transform:scale(1)}}
+.step[aria-selected="true"] b{background:rgba(255,255,255,.25);color:#fff}
+.step.done b{background:var(--brand-light);color:#fff}
+.step.done{border-color:var(--brand-light)}
+.step.locked{opacity:.5;cursor:not-allowed}
+.step.locked b{background:var(--line)}
+.step.unlock{animation:unlockPulse 1.1s ease 3}
+@keyframes unlockPulse{0%,100%{box-shadow:0 0 0 0 rgba(168,129,74,0)}50%{box-shadow:0 0 0 7px rgba(168,129,74,.35)}}
+@media (pointer:coarse){.step{min-height:42px}}
+.loading,.fallback{
+  position:absolute;inset:0;z-index:9;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  background:linear-gradient(180deg,#fff,var(--stage-mid));text-align:center;padding:20px 60px
+}
+.loading.show,.fallback.show{display:flex}
+.fallback{z-index:10}
+.spinner{width:34px;height:34px;border-radius:99px;border:3px solid var(--line);border-top-color:var(--brand);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p,.fallback p{margin:0;color:var(--muted);font-size:13px}
+.fallback .fb-ic{width:46px;height:46px;border-radius:99px;background:var(--danger-soft);color:var(--danger);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800}
+.fallback .fb-title{color:var(--ink);font-size:15px;font-weight:700}
+.fallback #fallbackDetail{font-size:11.5px;color:#a54527;max-width:460px;line-height:1.6}
+.toast{
+  position:absolute;left:50%;top:14px;z-index:31;transform:translateX(-50%);display:none;max-width:min(540px,calc(100% - 110px));
+  text-align:center;background:rgba(15,63,61,.95);color:#fff;border-radius:99px;padding:8px 15px;font-size:13px;line-height:1.4;box-shadow:var(--sh-3)
+}
+.toast.show{display:block;animation:toastIn .25s ease}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,-6px)}to{opacity:1;transform:translate(-50%,0)}}
+@media (max-width:620px){.toast{border-radius:14px;top:8px}}
+
+/* Nút dùng chung (theo design system của các module) */
+.btn{
+  min-height:44px;padding:10px 18px;border-radius:12px;border:1px solid var(--brand);
+  background:linear-gradient(180deg,var(--brand),var(--brand-dark));color:#fff;font-weight:800;font-size:13px;letter-spacing:.03em;
+  cursor:pointer;box-shadow:var(--sh-1);transition:transform .12s,filter .12s
+}
+.btn:hover{filter:brightness(1.08)} .btn:active{transform:scale(.97)}
+.btn.alt{background:#fff;color:var(--brand-dark);border-color:var(--line)} .btn.alt:hover{background:var(--brand-soft)}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.ghost:focus-visible,.btn:focus-visible,.opt:focus-visible,.step:focus-visible,.stage-nav:focus-visible,.tb-btn:focus-visible,
+.dcard:focus-visible,.dz-head:focus-visible,.q-dot:focus-visible,.sum-card:focus-visible,.intro-explore:focus-visible,.play-big:focus-visible,
+.q-text:focus-visible{outline:3px solid #f2c94c;outline-offset:2px}
+@keyframes pop{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+/* Lớp nội dung trong stage: video / module 3D / tương tác 2D */
+.layer{position:absolute;inset:0;display:none}
+.layer.show{display:block}
+.video-layer{z-index:2;background:#0b2b2a}
+.video-layer video{display:block;width:100%;height:100%;object-fit:contain;background:#0b2b2a}
+.module-layer{z-index:2;background:#195658}
+.module-layer iframe{display:block;width:100%;height:100%;border:0;background:#195658}
+.ix-layer{z-index:5;padding:14px 62px}
+.ix-layer.show{display:flex}
+.stage.has-tools .ix-layer{padding-top:58px}
+.ix{position:relative;flex:1;min-width:0;min-height:0;display:flex}
+.ix-card{
+  margin:auto;width:min(1000px,100%);max-height:100%;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;
+  background:#fff;border-radius:var(--r);box-shadow:var(--sh-3);padding:18px 20px 16px;animation:pop .3s ease
+}
+.ix-kicker,.ov-kicker{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-light)}
+.ix-title{margin:4px 0 6px;font-size:clamp(16px,2.2vw,20px);line-height:1.35;color:var(--brand-dark)}
+.ix-title.big{font-size:clamp(20px,3vw,26px);letter-spacing:.02em}
+.ix-sub{margin:0 0 12px;color:var(--muted);font-size:13.5px}
+.ix-lead{margin:0 0 10px;padding:10px 12px;border-radius:12px;background:#fff7e8;color:#6d4a14;font-weight:600;font-size:14px}
+.ix-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-bottom:8px}
+.ix-actions,.ov-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-top:14px}
+.ov-actions{justify-content:center}
+.ix-actions:empty{display:none}
+.split{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:18px;align-items:start}
+.ix-main{min-width:0}
+@media (max-width:820px){.split{grid-template-columns:1fr;gap:12px}}
+
+/* Quiz trắc nghiệm */
+.q-progress{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.q-count{font-size:12px;font-weight:800;color:var(--brand);background:var(--brand-soft);padding:3px 10px;border-radius:99px}
+.q-dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.q-dot{width:34px;height:34px;border-radius:99px;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:12.5px;color:var(--brand-dark);cursor:pointer}
+.q-dot.cur{border-color:var(--brand);box-shadow:0 0 0 3px rgba(25,88,86,.16)}
+.q-dot.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.q-dot:disabled{opacity:.4;cursor:not-allowed}
+@media (pointer:coarse){.q-dot{width:40px;height:40px}}
+.q-text{font-size:clamp(15px,2vw,17px);font-weight:700;color:var(--ink);margin:2px 0 12px;line-height:1.45;border-radius:6px}
+.opts{display:grid;gap:9px}
+.opt{
+  display:flex;align-items:center;gap:10px;min-height:46px;width:100%;text-align:left;padding:8px 12px;border-radius:12px;
+  border:1.5px solid var(--line);background:#fff;cursor:pointer;color:var(--ink);font-size:14.5px;font-weight:500;transition:background .15s,border-color .15s
+}
+.opt b{flex:0 0 auto;width:28px;height:28px;border-radius:99px;background:var(--brand-soft);color:var(--brand-dark);display:flex;align-items:center;justify-content:center;font-size:12.5px}
+.opt:hover{background:var(--brand-soft);border-color:var(--brand-light)}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok)} .opt.ok b{background:var(--ok);color:#fff}
+.opt.bad{background:var(--danger-soft);border-color:var(--danger);animation:shake .35s} .opt.bad b{background:var(--danger);color:#fff}
+.opt:disabled{cursor:default} .opt:disabled:not(.ok){opacity:.5} .opt:disabled:hover:not(.ok){background:#fff;border-color:var(--line)}
+.fb{min-height:22px;margin-top:10px;font-size:14px;font-weight:700;color:var(--muted)}
+.fb.ok{color:var(--ok)} .fb.bad{color:var(--danger)}
+
+/* Kéo – thả (pointer events: chuột + cảm ứng + bút) */
+.dnd{display:flex;flex-direction:column;gap:12px}
+.dnd-tray{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:62px;padding:10px;border:2px dashed var(--line);border-radius:14px;background:#fafdfc}
+.dnd-tray.empty{align-items:center}
+.dnd-tray.empty::after{content:'✓ Đã xếp xong tất cả các thẻ';color:var(--ok);font-weight:700;font-size:13px}
+.dcard{
+  position:relative;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;border-radius:12px;
+  border:1.5px solid var(--line);background:#fff;color:var(--ink);font-weight:600;font-size:14px;line-height:1.3;text-align:left;
+  cursor:grab;box-shadow:var(--sh-1);touch-action:none;user-select:none;-webkit-user-select:none;transition:box-shadow .15s,border-color .15s,background .15s
+}
+.dcard .dc-ic{font-size:20px;line-height:1}
+.dcard:hover{border-color:var(--brand-light)}
+.dcard.selected{border-color:var(--brand);background:var(--brand-soft);box-shadow:0 0 0 3px rgba(25,88,86,.2)}
+.dcard.dragging{z-index:60;cursor:grabbing;box-shadow:var(--sh-3);transition:none;border-color:var(--brand)}
+.dcard.back{transition:transform .26s ease}
+.dcard.placed{cursor:default;border-color:var(--ok);background:var(--ok-soft);box-shadow:none;animation:pop .25s ease}
+.dc-ok{font-style:normal;color:var(--ok);font-weight:800;margin-left:auto;padding-left:4px}
+.dz-wrap.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.dz{border:2px solid var(--line);border-radius:14px;background:#fff;display:flex;flex-direction:column;min-height:132px;transition:border-color .15s,background .15s}
+.dnd.has-sel .dz{border-style:dashed;border-color:var(--brand-light)}
+.dz.over{border-color:var(--brand)!important;background:var(--brand-soft)}
+.dz.shake{animation:shake .35s;border-color:var(--danger)!important}
+.dz-head{
+  border:0;border-radius:12px 12px 0 0;padding:9px 10px;min-height:42px;font-weight:800;font-size:13px;letter-spacing:.06em;
+  text-transform:uppercase;color:#fff;background:var(--brand);cursor:pointer
+}
+.dz.solid .dz-head{background:var(--solid)} .dz.liquid .dz-head{background:var(--liquid)} .dz.gas .dz-head{background:var(--gas)}
+.dz-items{flex:1;display:flex;flex-direction:column;gap:6px;padding:8px}
+.dz-items .dcard{width:100%}
+@media (max-width:760px){
+  .dz-wrap.cols{grid-template-columns:1fr}
+  .dz{min-height:auto}
+  .dz-items{flex-direction:row;flex-wrap:wrap;min-height:52px}
+  .dz-items .dcard{width:auto}
+}
+@media (max-width:620px){
+  .dnd{gap:10px}
+  .dnd-tray{gap:6px;padding:8px 6px;min-height:52px}
+  .dcard{padding:6px 10px;gap:6px;font-size:13px}
+  .dcard .dc-ic{font-size:17px}
+  .dz-head{min-height:38px;padding:7px 8px;font-size:12px}
+}
+
+/* Nút trạng thái & sơ đồ */
+.st-node{display:inline-flex;align-items:center;justify-content:center;min-width:84px;padding:12px 14px;border-radius:14px;font-weight:800;letter-spacing:.06em;color:#fff;font-size:15px}
+.st-node.solid{background:var(--solid)} .st-node.liquid{background:var(--liquid)} .st-node.gas{background:var(--gas)}
+.chain{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:6px 0 12px}
+.chain .x2{font-size:28px;font-weight:700;color:var(--brand)}
+.tri{display:grid;grid-template-columns:auto 1fr auto 1fr auto;align-items:center;gap:8px;margin:8px 0 12px}
+.tri.duo{grid-template-columns:auto 1fr auto;max-width:460px;margin-left:auto;margin-right:auto}
+.tri-arr{display:flex;flex-direction:column;gap:8px;align-items:stretch;font-size:12.5px;font-weight:700;text-align:center}
+.tri-arr span{padding:4px 6px;border-radius:8px;line-height:1.3}
+.tri-arr .fw{color:#9a4a12;background:#fff1d1}
+.tri-arr .bk{color:#1f5f93;background:var(--liquid-soft)}
+@media (max-width:620px){.tri .st-node{min-width:52px;padding:10px 6px;font-size:12.5px}.tri-arr{font-size:11px}}
+.tr{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:13px;white-space:nowrap}
+.tr b{padding:2px 9px;border-radius:99px;color:#fff;letter-spacing:.04em}
+.tr b.solid{background:var(--solid)} .tr b.liquid{background:var(--liquid)} .tr b.gas{background:var(--gas)}
+.tr-row{display:flex;justify-content:center;margin:8px 0}
+
+/* Thẻ kết luận (modal) + thẻ sau video */
+.ix-modal,.v-pane{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:14px 62px;
+  background:rgba(6,30,29,.6);backdrop-filter:blur(3px)
+}
+.ix-modal{z-index:7}
+.v-pane{z-index:3}
+.ov-card,.v-card{
+  width:min(660px,100%);max-height:100%;overflow:auto;overscroll-behavior:contain;background:#fff;border-radius:20px;box-shadow:var(--sh-3);
+  padding:20px;text-align:center;animation:pop .3s ease
+}
+.ov-card h2,.v-card h2{margin:4px 0 12px;font-size:clamp(17px,2.8vw,22px);color:var(--brand-dark);line-height:1.35}
+.ov-point{margin:8px 0;padding:10px 14px;border-radius:12px;background:var(--brand-soft);color:var(--ink);font-size:clamp(14px,2.2vw,16px);line-height:1.5;text-align:left}
+.ov-point::before{content:'✓ ';color:var(--brand);font-weight:800}
+.ov-note{margin:8px 0 2px;color:var(--muted);font-size:13px}
+.ask{margin:10px 0;padding:12px 14px;border-radius:12px;background:#fff7e8;color:#6d4a14;font-weight:700;font-size:clamp(14px,2.2vw,16px)}
+.memo{margin:10px 0;padding:10px 14px;border-radius:12px;border:2px dashed var(--gold);background:#fffaf1;text-align:left;font-size:15px}
+.memo b{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:2px}
+.play-big{
+  width:84px;height:84px;border-radius:99px;border:0;margin:6px auto 4px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(180deg,var(--brand-light),var(--brand));color:#fff;font-size:30px;cursor:pointer;box-shadow:0 10px 26px -10px rgba(15,63,61,.7)
+}
+.play-big:hover{filter:brightness(1.08)}
+.scene-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:8px 0 10px;text-align:left}
+.scene{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:12px;border:1.5px solid var(--line);background:#fafdfc}
+.scene .sc-ic{font-size:26px;line-height:1}
+.scene b{display:block;font-size:13.5px}
+@media (max-width:620px){.scene-grid{grid-template-columns:1fr}}
+.sum3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:left;margin:4px 0 6px}
+.s3{border-radius:14px;border:2px solid var(--line);padding:10px 12px;background:#fff}
+.s3 h4{margin:0 0 6px;font-size:14px;letter-spacing:.08em}
+.s3.solid{border-color:#e2d3c4} .s3.solid h4{color:var(--solid)}
+.s3.liquid{border-color:#c7ddf0} .s3.liquid h4{color:var(--liquid)}
+.s3.gas{border-color:#d3dee8} .s3.gas h4{color:var(--gas)}
+.s3 ul{margin:0;padding-left:17px;font-size:13.5px;line-height:1.5}
+@media (max-width:720px){.sum3{grid-template-columns:1fr}}
+
+/* STEP 14 – luồng thí nghiệm nến */
+.flows{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.flow{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 8px;border-radius:14px;border:1.5px solid var(--line);background:#fafdfc}
+.flow .fl-node{padding:5px 10px;border-radius:99px;font-weight:800;font-size:12px;letter-spacing:.04em;color:#fff;text-align:center}
+.flow .fl-node.solid{background:var(--solid)} .flow .fl-node.liquid{background:var(--liquid)}
+.flow .fl-act{padding:4px 10px;border-radius:8px;font-weight:700;font-size:12px}
+.flow .fl-act.heat{background:#fff1d1;color:#9a4a12} .flow .fl-act.cool{background:var(--liquid-soft);color:#1f5f93}
+.flow .fl-arrow{color:var(--muted);font-weight:800;line-height:1}
+@media (max-width:820px){.flows{max-width:440px;margin:0 auto}}
+
+/* STEP 16 – minh họa bàn tay */
+.scene-fig{margin:0;border-radius:14px;background:linear-gradient(180deg,#f6fbfa,var(--brand-soft));padding:10px;text-align:center}
+.hand-svg{width:100%;max-width:240px;height:auto;display:block;margin:0 auto}
+.scene-fig figcaption{text-align:left;font-size:13.5px;color:var(--ink);margin-top:6px}
+.scene-fig figcaption b{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-light)}
+.hand-svg .drop{transform-box:fill-box;transform-origin:center;animation:dropDry 4.6s ease-in-out infinite}
+.hand-svg .d2{animation-delay:.5s} .hand-svg .d3{animation-delay:1s} .hand-svg .d4{animation-delay:1.5s}
+.hand-svg .vp{opacity:0;animation:vapor 4.6s ease-in-out infinite}
+.hand-svg .v2{animation-delay:.5s} .hand-svg .v3{animation-delay:1s} .hand-svg .v4{animation-delay:1.5s}
+@keyframes dropDry{0%,12%{transform:scale(1);opacity:.95}78%{transform:scale(.25);opacity:.15}100%{transform:scale(.25);opacity:0}}
+@keyframes vapor{0%,18%{transform:translateY(6px);opacity:0}50%{opacity:.85}100%{transform:translateY(-24px);opacity:0}}
+@media (max-width:820px){.hand-svg{max-width:170px}}
+
+/* STEP 19 – sơ đồ kéo thả */
+.cyc{display:grid;grid-template-columns:auto 1fr auto 1fr auto;align-items:center;gap:10px}
+.cyc-links{display:grid;gap:8px}
+.dz.slot{min-height:auto}
+.dz.slot .dz-head{font-size:12.5px;text-transform:none;letter-spacing:.02em;background:var(--brand)}
+.dz.slot .dz-items{min-height:56px;padding:6px}
+@media (max-width:760px){
+  .cyc{grid-template-columns:1fr}
+  .cyc .st-node{justify-self:center;min-width:150px;padding:9px}
+  .cyc-links{grid-template-columns:1fr 1fr}
+}
+
+/* STEP 21 – tổng kết */
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+.sum-card{
+  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:24px 16px 18px;border-radius:18px;
+  border:2px solid var(--line);background:linear-gradient(180deg,#fff,var(--stage-mid));cursor:pointer;color:var(--ink);text-align:center;min-height:180px;
+  transition:transform .15s,border-color .15s,box-shadow .15s
+}
+.sum-card:hover{transform:translateY(-2px);border-color:var(--brand-light);box-shadow:var(--sh-2)}
+.sum-card.seen{border-color:var(--ok)}
+.sum-num{position:absolute;left:12px;top:12px;width:30px;height:30px;border-radius:99px;background:var(--brand);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px}
+.sum-ic{font-size:34px;letter-spacing:4px;line-height:1.2;white-space:nowrap}
+.sum-title{font-size:16px;font-weight:800;color:var(--brand-dark);letter-spacing:.03em}
+.sum-status{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:#f2f6f5;color:var(--muted)}
+.sum-status.seen{background:var(--ok-soft);color:var(--ok)}
+@media (max-width:620px){.sum-grid{grid-template-columns:1fr}.sum-card{min-height:auto;padding:18px 14px 14px}}
+.state-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.state-card{border-radius:16px;border:2px solid var(--line);padding:12px 14px;background:#fff;text-align:left}
+.state-card .ill{height:84px;display:flex;align-items:center;justify-content:center;border-radius:12px;margin-bottom:8px}
+.state-card .ill svg{height:70px;width:auto}
+.state-card.solid .ill{background:var(--solid-soft)} .state-card.liquid .ill{background:var(--liquid-soft)} .state-card.gas .ill{background:var(--gas-soft)}
+.state-card h3{margin:0 0 6px;font-size:15px;letter-spacing:.08em}
+.state-card.solid h3{color:var(--solid)} .state-card.liquid h3{color:var(--liquid)} .state-card.gas h3{color:var(--gas)}
+.state-card ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.5}
+.state-card .ex{margin-top:6px;font-size:12.5px;color:var(--muted)}
+@media (max-width:760px){
+  .state-grid{grid-template-columns:1fr}
+  .state-card{display:grid;grid-template-columns:76px 1fr;gap:10px;align-items:start}
+  .state-card .ill{height:70px;margin:0}.state-card .ill svg{height:56px}
+}
+.proc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:4px}
+.proc{border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;background:#fafdfc;text-align:left}
+.proc h4{margin:6px 0 4px;font-size:15px;color:var(--brand-dark)}
+.proc ul{margin:0;padding-left:17px;font-size:13px;color:var(--ink)}
+@media (max-width:620px){.proc-grid{grid-template-columns:1fr}}
+.remember{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:8px;counter-reset:rem}
+.remember li{counter-increment:rem;display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:clamp(14px,2vw,15.5px);line-height:1.5;text-align:left}
+.remember li::before{content:counter(rem);flex:0 0 auto;width:28px;height:28px;border-radius:99px;background:var(--brand);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px}
+.finish{text-align:center;padding:10px 4px}
+.finish .trophy{font-size:56px;line-height:1;margin:4px 0 6px;animation:pop .5s ease}
+.finish .done-badge{display:inline-block;margin-top:10px;padding:6px 14px;border-radius:99px;background:var(--ok-soft);color:var(--ok);font-weight:800;font-size:13px}
+.finish .ix-actions{justify-content:center}
+
+@media (max-width:620px){
+  .ix-layer,.ix-modal,.v-pane{padding-left:52px;padding-right:52px}
+  .ix-layer{padding-top:8px;padding-bottom:8px}
+  .ix-card{padding:14px 14px 12px}
+  .ov-card,.v-card{padding:16px 14px}
+  .ix-actions .btn,.ov-actions .btn{flex:1 1 auto}
+}
+
+/* Intro splash */
+.intro-loader{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:24px;overflow:hidden;background:radial-gradient(1200px 600px at 80% -10%,rgba(214,231,140,.18),transparent 60%),radial-gradient(900px 520px at -10% 110%,rgba(90,167,221,.22),transparent 60%),linear-gradient(160deg,#0f3f3d 0%,#195658 55%,#123c3a 100%);transition:opacity .4s ease}
+.intro-loader.leaving{opacity:0;pointer-events:none}
+.intro-loader::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.18) 56%,rgba(0,0,0,.36));pointer-events:none}
+.intro-loader__inner{position:relative;z-index:2;width:min(800px,92vw);display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff}
+.intro-card{width:100%;background:transparent;border:none;border-radius:0;padding:0;box-shadow:none;text-align:center}
+.intro-kicker{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#d6e78c;text-shadow:0 1px 4px rgba(0,0,0,.45)}
+.intro-card h1{font-size:clamp(26px,4vw,44px);margin:10px 0 8px;color:#fff;line-height:1.16;font-weight:800;letter-spacing:-.01em;text-shadow:0 4px 18px rgba(0,0,0,.5)}
+.intro-line{margin:0 0 14px;font-size:clamp(15px,2.2vw,20px);font-weight:700;letter-spacing:.06em;color:#d8ff64;text-shadow:0 2px 10px rgba(0,0,0,.45)}
+.intro-states{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 16px}
+.intro-states span{padding:5px 14px;border-radius:99px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);font-size:13px;font-weight:600}
+.intro-sub{max-width:700px;margin:0 auto 30px;font-size:14px;line-height:1.6;color:rgba(255,255,255,.93);text-shadow:0 2px 8px rgba(0,0,0,.48)}
+.intro-progress{width:min(410px,72vw);height:3px;margin:0 auto 14px;border-radius:99px;background:rgba(255,255,255,.36);overflow:hidden;box-shadow:0 1px 5px rgba(0,0,0,.25)}
+.intro-progress span{display:block;height:100%;width:0;background:#d8ff64;box-shadow:0 0 12px rgba(216,255,100,.5);transition:width .25s linear}
+.intro-meta{display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:0;font-size:12px;color:rgba(255,255,255,.88)}
+#introStatus{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.ready-dot{width:8px;height:8px;border-radius:99px;background:#d8ff64;display:inline-block;margin-right:7px;box-shadow:0 0 10px rgba(216,255,100,.65)}
+.is-ready .ready-dot{background:#bfffdc}
+.intro-time{font-size:12px;color:rgba(255,255,255,.78)}
+.intro-explore{margin:20px auto 0;width:auto;min-width:210px;min-height:46px;padding:12px 20px;border-radius:10px;border:1px solid rgba(255,255,255,.34);cursor:pointer;background:rgba(25,88,86,.82);backdrop-filter:blur(10px);color:#fff;font-weight:700;font-size:14px;letter-spacing:.04em;opacity:0;transform:translateY(6px);pointer-events:none;transition:opacity .28s ease,transform .28s ease,background .2s}
+.intro-loader.ready .intro-explore{opacity:1;transform:translateY(0);pointer-events:auto}
+.intro-explore:hover{background:rgba(47,130,125,.96)}
+.intro-credit{margin-top:30px;color:rgba(255,255,255,.86);font-size:12px;text-shadow:0 1px 5px rgba(0,0,0,.45)}
+@media (max-width:620px){.intro-loader{padding:18px}.intro-card h1{font-size:24px}.intro-sub{font-size:13px;margin-bottom:22px}.intro-credit{margin-top:22px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<div class="intro-loader" id="introLoader" aria-live="polite">
+  <div class="intro-loader__inner">
+    <section class="intro-card" aria-labelledby="introTitle">
+      <div class="intro-kicker">Khoa học 5</div>
+      <h1 id="introTitle">ĐẶC ĐIỂM CỦA CHẤT Ở TRẠNG THÁI RẮN, LỎNG, KHÍ</h1>
+      <p class="intro-line">SỰ BIẾN ĐỔI TRẠNG THÁI CỦA CHẤT</p>
+      <div class="intro-states" aria-hidden="true"><span>🪨 Rắn</span><span>💧 Lỏng</span><span>💨 Khí</span></div>
+      <p class="intro-sub">Khám phá đặc điểm của chất ở trạng thái rắn, lỏng, khí và tìm hiểu cách các chất có thể chuyển từ trạng thái này sang trạng thái khác qua video, mô phỏng 3D và các hoạt động tương tác.</p>
+      <div class="intro-progress" aria-hidden="true"><span id="introProgressBar"></span></div>
+      <div class="intro-meta">
+        <div id="introStatus"><span class="ready-dot"></span>Đang chuẩn bị bài học…</div>
+        <div class="intro-time">21 hoạt động · Video · Mô phỏng 3D · Tương tác</div>
+      </div>
+      <button class="intro-explore" id="btnExplore" type="button">KHÁM PHÁ BÀI HỌC</button>
+    </section>
+    <div class="intro-credit">Được phát triển bởi <strong>YooBook</strong></div>
+  </div>
+</div>
+
+<div class="app">
+  <header class="topbar">
+    <div class="logoclip"><img class="logo" alt="YooBook" src="data:image/png;base64,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"></div>
+    <div class="titles">
+      <div class="badge">Khoa học 5 · Chất</div>
+      <h1 class="lg">Đặc điểm của chất và sự biến đổi trạng thái</h1>
+      <h1 class="sm">Rắn – Lỏng – Khí</h1>
+    </div>
+    <div class="tb-right">
+      <button class="tb-btn" id="btnFullscreen" aria-label="Toàn màn hình" title="Toàn màn hình" type="button">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="stagecol">
+      <div class="frame">
+        <div class="stage" id="stage" data-step="0" role="tabpanel" aria-live="off">
+          <div class="vignette"></div>
+
+          <!-- Công cụ của parent: chỉ hiện khi có ý nghĩa (module 3D tự quản lý Toàn cảnh / Tự xoay của nó) -->
+          <div class="stage-tools" id="stageTools" hidden>
+            <button class="ghost" id="btnReplay" type="button" hidden aria-label="Xem lại video từ đầu">↺ <span>Xem lại từ đầu</span></button>
+            <button class="ghost" id="btnNarration" type="button" aria-pressed="false" hidden aria-label="Bật hoặc tắt thuyết minh">🔊 <span>Thuyết minh</span></button>
+          </div>
+
+          <button class="stage-nav prev" id="btnPrevStep" type="button" aria-label="Bước trước">◀</button>
+          <button class="stage-nav next" id="btnNextStep" type="button" aria-label="Bước sau">▶</button>
+
+          <div class="stage-hint" id="stageHint" hidden></div>
+
+          <!-- ===== VIDEO (MỘT video element dùng chung cho Step 1, 10, 15, 17, 18) ===== -->
+          <div class="layer video-layer" id="videoLayer">
+            <video id="lessonVideo" controls playsinline preload="metadata" aria-label="Video bài học"></video>
+            <div class="v-pane" id="videoStart" hidden></div>
+            <div class="v-pane" id="videoEnd" hidden aria-live="polite"></div>
+            <div class="v-pane" id="videoError" hidden role="alert">
+              <div class="v-card">
+                <div class="ov-kicker">Có lỗi xảy ra</div>
+                <h2>Không thể tải video của hoạt động này.</h2>
+                <p class="ov-note">Em hãy kiểm tra kết nối hoặc thử tải lại.</p>
+                <div class="ov-actions"><button class="btn" id="btnVideoRetry" type="button">THỬ LẠI</button></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== MODULE 3D (MỘT iframe active duy nhất) ===== -->
+          <div class="layer module-layer" id="moduleLayer">
+            <iframe id="moduleFrame" title="Mô phỏng 3D" allow="autoplay; fullscreen"></iframe>
+          </div>
+
+          <!-- ===== TƯƠNG TÁC 2D (code trực tiếp trong final.html) ===== -->
+          <div class="layer ix-layer" id="ixLayer">
+            <section class="ix" id="ix-step2" data-panel="step2" hidden aria-label="Nhận biết ba trạng thái của chất"></section>
+            <section class="ix" id="ix-step9" data-panel="step9" hidden aria-label="Ôn tập rắn – lỏng – khí"></section>
+            <section class="ix" id="ix-step14" data-panel="step14" hidden aria-label="Khám phá sự biến đổi trạng thái"></section>
+            <section class="ix" id="ix-step16" data-panel="step16" hidden aria-label="Vì sao nước rửa tay khô nhanh"></section>
+            <section class="ix" id="ix-step19" data-panel="step19" hidden aria-label="Ôn tập sự biến đổi trạng thái"></section>
+            <section class="ix" id="ix-step21" data-panel="step21" hidden aria-label="Tổng kết bài học"></section>
+          </div>
+          <div class="ix-modal" id="ixModal" role="dialog" aria-modal="true" aria-labelledby="ixModalTitle" hidden>
+            <div class="ov-card" id="ixModalCard"></div>
+          </div>
+
+          <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+          <div class="fallback" id="fallback" role="alert">
+            <div class="fb-ic" aria-hidden="true">!</div>
+            <p class="fb-title">Không thể tải mô phỏng của hoạt động này.</p>
+            <p id="fallbackDetail"></p>
+            <button class="btn" id="btnRetryModule" type="button">THỬ TẢI LẠI</button>
+          </div>
+          <div class="loading" id="loadingEl">
+            <div class="spinner"></div>
+            <p>Đang tải mô phỏng 3D…</p>
+          </div>
+        </div>
+        <div class="steps" id="stepsBar" role="tablist" aria-label="Các bước học"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Một kênh voice + một kênh hiệu ứng: không bao giờ phát chồng nhau -->
+<audio id="lessonVoice" preload="none"></audio>
+<audio id="lessonSfx" preload="none"></audio>
+
+<script>
+(function () {
+'use strict';
+
+/* ========================================
+   LESSON SHELL – CẤU HÌNH ASSET
+======================================== */
+const ASSETS = {
+
+    videos: {
+        step1: "1. Khởi động.mp4",
+        step10: "10. Chất có thể thay đổi trạng thái.mp4",
+        step15: "15. Cồn bay hơi.mp4",
+        step17: "17. Băng tan khi nhiệt độ tăng.mp4",
+        step18: "18. Biến đổi trạng thái trong đời sống.mp4"
+    },
+
+    modules: {
+        module1: "Khám phá đặc điểm của chất khí.html",
+        module2: "Khám phá đặc điểm của chất lỏng.html",
+        module3: "Khám phá đặc điểm của chất rắn.html",
+        module4: "Khám phá sự biến đổi trạng thái của nến.html",
+        module5: "Xưởng tạo hình từ nến.html"
+    },
+
+    voices: {
+        step14Conclusion: "",
+        step21Summary: ""
+    },
+
+    sounds: {
+        correct: "",
+        wrong: ""
+    }
+};
+
+/* moduleId = định danh mà chính file module gửi trong postMessage (MODULE_STEP_COMPLETE) */
+const MODULE_MAP = {
+
+    /* MODULE 1 – CHẤT KHÍ */
+    module1: {
+        src: ASSETS.modules.module1,
+        moduleId: "gas-properties",
+        globalSteps: [3, 4]
+    },
+
+    /* MODULE 2 – CHẤT LỎNG */
+    module2: {
+        src: ASSETS.modules.module2,
+        moduleId: "liquid-properties",
+        globalSteps: [5, 6]
+    },
+
+    /* MODULE 3 – CHẤT RẮN */
+    module3: {
+        src: ASSETS.modules.module3,
+        moduleId: "solid-properties",
+        globalSteps: [7, 8]
+    },
+
+    /* MODULE 4 – NẾN */
+    module4: {
+        src: ASSETS.modules.module4,
+        moduleId: "candle-state-change",
+        globalSteps: [11, 12, 13]
+    },
+
+    /* MODULE 5 – XƯỞNG NẾN */
+    module5: {
+        src: ASSETS.modules.module5,
+        moduleId: "candle-molding",
+        globalSteps: [20]
+    }
+
+};
+
+/* ========================================
+   STATE TRUNG TÂM
+======================================== */
+const lessonState = {
+    currentStep: 0,
+    unlockedMax: 0,
+    completedSteps: new Set(),
+    activeModule: null,
+    activeModuleLocalStep: null,
+    videoCompleted: {},
+    interactionState: {},
+    isSwitching: false,
+    visitedSteps: new Set(),
+    entered: false,
+    rendered: false
+};
+
+/* ========================================
+   21 STEP CỦA BÀI HỌC
+======================================== */
+const STEP_CONFIG = [
+    /* STEP 1 – VIDEO KHỞI ĐỘNG */
+    { id: 1,  title: "Khởi động",            name: "Khởi động: Con quạ và bình nước",            type: "video",       src: ASSETS.videos.step1 },
+    /* STEP 2 – BA TRẠNG THÁI */
+    { id: 2,  title: "Ba trạng thái",        name: "Nhận biết ba trạng thái của chất",           type: "interaction", panel: "step2" },
+    /* MODULE 1 – CHẤT KHÍ */
+    { id: 3,  title: "Hình dạng chất khí",   name: "Hình dạng của chất khí",                     type: "module",      module: "module1", localStep: 0 },
+    { id: 4,  title: "Không gian chất khí",  name: "Khoảng không gian chất khí chiếm",           type: "module",      module: "module1", localStep: 1 },
+    /* MODULE 2 – CHẤT LỎNG */
+    { id: 5,  title: "Hình dạng chất lỏng",  name: "Hình dạng của chất lỏng",                    type: "module",      module: "module2", localStep: 0 },
+    { id: 6,  title: "Không gian chất lỏng", name: "Khoảng không gian chất lỏng chiếm",          type: "module",      module: "module2", localStep: 1 },
+    /* MODULE 3 – CHẤT RẮN */
+    { id: 7,  title: "Hình dạng chất rắn",   name: "Hình dạng của chất rắn",                     type: "module",      module: "module3", localStep: 0 },
+    { id: 8,  title: "Không gian chất rắn",  name: "Khoảng không gian chất rắn chiếm",           type: "module",      module: "module3", localStep: 1 },
+    /* STEP 9 – ÔN TẬP 1 */
+    { id: 9,  title: "Ôn tập 1",             name: "Ôn tập: Rắn – lỏng – khí",                   type: "interaction", panel: "step9" },
+    /* STEP 10 – VIDEO */
+    { id: 10, title: "Thay đổi trạng thái",  name: "Chất có thể thay đổi trạng thái",            type: "video",       src: ASSETS.videos.step10 },
+    /* MODULE 4 – NẾN */
+    { id: 11, title: "Quan sát nến",         name: "Quan sát nến trước khi đun",                 type: "module",      module: "module4", localStep: 0 },
+    { id: 12, title: "Nến nóng chảy",        name: "Nến nóng chảy",                              type: "module",      module: "module4", localStep: 1 },
+    { id: 13, title: "Nến đông lại",         name: "Nến đông lại khi để nguội",                  type: "module",      module: "module4", localStep: 2 },
+    /* STEP 14 – KHÁM PHÁ */
+    { id: 14, title: "Khám phá",             name: "Câu hỏi khám phá: Sự biến đổi trạng thái",   type: "interaction", panel: "step14", voice: "step14Conclusion" },
+    /* STEP 15 – CỒN */
+    { id: 15, title: "Cồn bay hơi",          name: "Cồn bay hơi",                                type: "video",       src: ASSETS.videos.step15 },
+    /* STEP 16 – NƯỚC RỬA TAY */
+    { id: 16, title: "Nước rửa tay",         name: "Vì sao nước rửa tay khô nhanh?",             type: "interaction", panel: "step16" },
+    /* STEP 17 – BĂNG TAN */
+    { id: 17, title: "Băng tan",             name: "Băng tan khi nhiệt độ tăng",                 type: "video",       src: ASSETS.videos.step17 },
+    /* STEP 18 – ĐỜI SỐNG */
+    { id: 18, title: "Trong đời sống",       name: "Biến đổi trạng thái trong đời sống",         type: "video",       src: ASSETS.videos.step18 },
+    /* STEP 19 – ÔN TẬP 2 */
+    { id: 19, title: "Ôn tập 2",             name: "Ôn tập sự biến đổi trạng thái",              type: "interaction", panel: "step19" },
+    /* MODULE 5 – XƯỞNG NẾN */
+    { id: 20, title: "Tạo hình nến",         name: "Vận dụng: Tạo hình mới từ nến",              type: "module",      module: "module5", localStep: 0 },
+    /* STEP 21 – TỔNG KẾT */
+    { id: 21, title: "Tổng kết",             name: "Tổng kết bài học",                           type: "interaction", panel: "step21", voice: "step21Summary" }
+];
+
+const LESSON_STEPS = STEP_CONFIG.map((cfg, index) => Object.defineProperties(Object.assign({ index }, cfg), {
+    completed: { enumerable: true, get() { return lessonState.completedSteps.has(index); } },
+    unlocked:  { enumerable: true, get() { return index <= lessonState.unlockedMax; } }
+}));
+const LAST_INDEX = LESSON_STEPS.length - 1;
+
+/* ========================================
+   TIỆN ÍCH DÙNG CHUNG
+======================================== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const stage = $('stage'), stepsBar = $('stepsBar'), btnPrev = $('btnPrevStep'), btnNext = $('btnNextStep');
+const toastEl = $('toast'), stageHint = $('stageHint'), stageTools = $('stageTools');
+const ixLayer = $('ixLayer'), modal = $('ixModal'), modalCard = $('ixModalCard');
+const STATE_LABEL = { solid: 'RẮN', liquid: 'LỎNG', gas: 'KHÍ' };
+
+function showToast(msg, ms) {
+    toastEl.textContent = msg;
+    toastEl.classList.remove('show'); void toastEl.offsetWidth; toastEl.classList.add('show');
+    clearTimeout(showToast.t);
+    showToast.t = setTimeout(() => toastEl.classList.remove('show'), ms || 2200);
+}
+function addBtn(box, label, alt, fn) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'btn' + (alt ? ' alt' : ''); b.textContent = label;
+    b.addEventListener('click', fn);
+    box.appendChild(b);
+    return b;
+}
+const trHTML = (a, b) => `<span class="tr"><b class="${a}">${STATE_LABEL[a]}</b> → <b class="${b}">${STATE_LABEL[b]}</b></span>`;
+const nodeHTML = k => `<span class="st-node ${k}">${STATE_LABEL[k]}</span>`;
+
+/* ---------- Âm thanh: voice + hiệu ứng (không autoplay trước user gesture) ---------- */
+const voiceEl = $('lessonVoice'), sfxEl = $('lessonSfx'), btnNarration = $('btnNarration');
+let userGestured = false, audioCtx = null;
+window.addEventListener('pointerdown', () => { userGestured = true; }, true);
+window.addEventListener('keydown', () => { userGestured = true; }, true);
+
+function voiceUrl(key) { return (key && ASSETS.voices[key]) || ''; }
+function syncNarrationBtn() { btnNarration.setAttribute('aria-pressed', (!voiceEl.paused && !voiceEl.ended) ? 'true' : 'false'); }
+['play', 'pause', 'ended', 'emptied'].forEach(ev => voiceEl.addEventListener(ev, syncNarrationBtn));
+voiceEl.addEventListener('error', () => { if (voiceEl.getAttribute('src')) showToast('Không phát được file thuyết minh.'); syncNarrationBtn(); });
+function stopVoice() {
+    if (!voiceEl.paused) voiceEl.pause();
+    try { if (voiceEl.getAttribute('src')) voiceEl.currentTime = 0; } catch (e) { /* metadata chưa có */ }
+    syncNarrationBtn();
+}
+function playVoice(key) {
+    const url = voiceUrl(key);
+    if (!url || !userGestured) return false;
+    stopSfx();
+    if (voiceEl.dataset.key !== key) { voiceEl.src = url; voiceEl.dataset.key = key; }
+    try { voiceEl.currentTime = 0; } catch (e) { /* metadata chưa có */ }
+    voiceEl.play().catch(() => {});
+    return true;
+}
+function stopSfx() { if (!sfxEl.paused) sfxEl.pause(); }
+function beep(kind) {
+    try {
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain(), t = audioCtx.currentTime;
+        const f = kind === 'correct' ? [660, 880] : [260, 190];
+        o.type = kind === 'correct' ? 'sine' : 'triangle';
+        o.frequency.setValueAtTime(f[0], t); o.frequency.linearRampToValueAtTime(f[1], t + .16);
+        g.gain.setValueAtTime(.06, t); g.gain.exponentialRampToValueAtTime(.0001, t + .22);
+        o.connect(g); g.connect(audioCtx.destination); o.start(t); o.stop(t + .24);
+    } catch (e) { /* trình duyệt không hỗ trợ Web Audio */ }
+}
+function sfx(kind) {
+    if (!userGestured || !voiceEl.paused) return;
+    const url = ASSETS.sounds[kind];
+    if (url) {
+        try { sfxEl.pause(); sfxEl.src = url; sfxEl.currentTime = 0; sfxEl.play().catch(() => {}); } catch (e) { /* bỏ qua */ }
+        return;
+    }
+    beep(kind);
+}
+btnNarration.addEventListener('click', () => {
+    const key = LESSON_STEPS[lessonState.currentStep].voice;
+    if (!voiceUrl(key)) return;
+    if (!voiceEl.paused) { voiceEl.pause(); return; }
+    if (voiceEl.dataset.key === key && voiceEl.currentTime > 0 && !voiceEl.ended) { voiceEl.play().catch(() => {}); return; }
+    playVoice(key);
+});
+
+/* ========================================
+   VIDEO PLAYER DÙNG CHUNG
+   (STEP 1 · STEP 10 · STEP 15 · STEP 17 · STEP 18)
+======================================== */
+const VIDEO_OUTRO = {
+    /* STEP 1 – VIDEO KHỞI ĐỘNG */
+    1: {
+        kicker: 'Câu hỏi khám phá',
+        next: 'TIẾP TỤC KHÁM PHÁ',
+        body: `<h2 id="vEndTitle">Vì sao khi thả sỏi vào bình, mực nước lại dâng lên?</h2>
+               <p class="ov-note">Em hãy suy nghĩ và cùng tìm câu trả lời qua các hoạt động tiếp theo nhé!</p>`
+    },
+    /* STEP 10 – VIDEO */
+    10: {
+        kicker: 'Em quan sát được',
+        next: 'TIẾP TỤC',
+        body: `<h2 id="vEndTitle">Cùng một chất có thể xuất hiện ở những trạng thái khác nhau.</h2>
+               <div class="ask">❓ Điều gì khiến trạng thái của chất thay đổi?</div>
+               <p class="ov-note">Cùng làm thí nghiệm với nến để tìm hiểu nhé!</p>`
+    },
+    /* STEP 15 – CỒN */
+    15: {
+        kicker: 'Em quan sát được',
+        next: 'TIẾP TỤC',
+        body: `<h2 id="vEndTitle">Cồn đã bay hơi từ trạng thái lỏng sang trạng thái khí.</h2>
+               <div class="tr-row">${trHTML('liquid', 'gas')}</div>
+               <div class="memo"><b>Ghi nhớ</b>Cồn là chất lỏng dễ bay hơi.</div>`
+    },
+    /* STEP 17 – BĂNG TAN */
+    17: {
+        kicker: 'Em quan sát được',
+        next: 'TIẾP TỤC',
+        body: `<h2 id="vEndTitle">Khi nhiệt độ môi trường tăng, băng có thể tan và chuyển từ trạng thái rắn sang trạng thái lỏng.</h2>
+               <div class="tr-row">${trHTML('solid', 'liquid')}</div>`
+    },
+    /* STEP 18 – ĐỜI SỐNG */
+    18: {
+        kicker: 'Em quan sát được',
+        next: 'TIẾP TỤC',
+        body: `<h2 id="vEndTitle">Biến đổi trạng thái trong đời sống</h2>
+               <div class="scene-grid">
+                 <div class="scene"><span class="sc-ic" aria-hidden="true">🍦</span><div><b>Kem tan</b>${trHTML('solid', 'liquid')}</div></div>
+                 <div class="scene"><span class="sc-ic" aria-hidden="true">🧈</span><div><b>Bơ nóng chảy</b>${trHTML('solid', 'liquid')}</div></div>
+                 <div class="scene"><span class="sc-ic" aria-hidden="true">🧊</span><div><b>Nước đóng băng</b>${trHTML('liquid', 'solid')}</div></div>
+                 <div class="scene"><span class="sc-ic" aria-hidden="true">💧</span><div><b>Hơi nước ngưng tụ trên bề mặt lạnh</b>${trHTML('gas', 'liquid')}</div></div>
+               </div>
+               <p class="ov-point">Sự biến đổi trạng thái của chất diễn ra rất thường xuyên trong cuộc sống quanh chúng ta.</p>`
+    }
+};
+
+const VideoPlayer = {
+    el: $('lessonVideo'),
+    layer: $('videoLayer'),
+    startPane: $('videoStart'),
+    endPane: $('videoEnd'),
+    errorPane: $('videoError'),
+    activeIndex: null,
+    maxWatched: 0,
+
+    init() {
+        const v = this.el;
+        v.addEventListener('timeupdate', () => {
+            if (this.activeIndex === null) return;
+            const t = v.currentTime;
+            if (t > this.maxWatched && t - this.maxWatched < 2.5) this.maxWatched = t;
+        });
+        v.addEventListener('seeking', () => {
+            if (this.activeIndex === null || LESSON_STEPS[this.activeIndex].completed) return;
+            if (v.currentTime > this.maxWatched + 2) {
+                v.currentTime = this.maxWatched;
+                showToast('Em hãy xem hết video để mở bước tiếp theo nhé!');
+            }
+        });
+        v.addEventListener('play', () => {
+            if (this.activeIndex === null) return;
+            this.hidePanes(); stopVoice();
+        });
+        v.addEventListener('ended', () => this.onEnded());
+        v.addEventListener('error', () => {
+            if (this.activeIndex === null || !v.getAttribute('src')) return;
+            this.showError();
+        });
+        $('btnReplay').addEventListener('click', () => this.replay());
+        $('btnVideoRetry').addEventListener('click', () => this.retry());
+    },
+    show(step, firstVisit) {
+        const v = this.el;
+        this.activeIndex = step.index;
+        this.maxWatched = 0;
+        this.layer.classList.add('show');
+        this.hidePanes();
+        v.muted = false;
+        v.setAttribute('src', step.src);
+        v.load();
+        if (step.completed) { this.showEnd(step); return; }
+        if (firstVisit) {
+            const p = v.play();
+            if (p && p.catch) p.catch(() => {
+                if (this.activeIndex === step.index && v.paused && !v.error) this.showStart(step);
+            });
+        } else {
+            this.showStart(step);
+        }
+    },
+    stop() {
+        const v = this.el;
+        this.layer.classList.remove('show');
+        if (this.activeIndex === null) return;
+        this.activeIndex = null;
+        v.pause();
+        v.removeAttribute('src');
+        v.load();
+        this.hidePanes();
+    },
+    hidePanes() {
+        this.startPane.hidden = true; this.endPane.hidden = true; this.errorPane.hidden = true;
+        this.startPane.innerHTML = ''; this.endPane.innerHTML = '';
+    },
+    showStart(step) {
+        this.hidePanes();
+        this.startPane.innerHTML = `<div class="v-card">
+            <div class="ov-kicker">Hoạt động ${step.id} · Video</div>
+            <h2>${esc(step.name)}</h2>
+            <button class="play-big" type="button" aria-label="Phát video">▶</button>
+            <p class="ov-note">Em hãy xem video đến hết để mở hoạt động tiếp theo.</p>
+          </div>`;
+        const play = this.startPane.querySelector('.play-big');
+        play.addEventListener('click', () => {
+            this.el.play().catch(() => { if (this.el.error) this.showError(); });
+        });
+        this.startPane.hidden = false;
+        play.focus({ preventScroll: true });
+    },
+    showEnd(step) {
+        const o = VIDEO_OUTRO[step.id];
+        this.hidePanes();
+        this.endPane.innerHTML = `<div class="v-card" role="dialog" aria-labelledby="vEndTitle">
+            <div class="ov-kicker">${esc(o.kicker)}</div>${o.body}<div class="ov-actions"></div></div>`;
+        const box = this.endPane.querySelector('.ov-actions');
+        addBtn(box, '↺ XEM LẠI TỪ ĐẦU', true, () => this.replay());
+        const next = addBtn(box, o.next, false, () => goToStep(step.index + 1));
+        this.endPane.hidden = false;
+        next.focus({ preventScroll: true });
+    },
+    showError() {
+        this.hidePanes();
+        this.errorPane.hidden = false;
+        $('btnVideoRetry').focus({ preventScroll: true });
+    },
+    onEnded() {
+        if (this.activeIndex === null) return;
+        const step = LESSON_STEPS[this.activeIndex];
+        lessonState.videoCompleted[step.id] = true;
+        this.showEnd(step);
+        completeStep(step.index);
+    },
+    replay() {
+        if (this.activeIndex === null) return;
+        const v = this.el, step = LESSON_STEPS[this.activeIndex];
+        this.hidePanes();
+        try { v.currentTime = 0; } catch (e) { /* chưa có metadata */ }
+        v.play().catch(() => { if (v.error) this.showError(); else this.showStart(step); });
+    },
+    retry() {
+        if (this.activeIndex === null) return;
+        const v = this.el, step = LESSON_STEPS[this.activeIndex];
+        this.hidePanes();
+        v.setAttribute('src', step.src);
+        v.load();
+        v.play().catch(() => { if (!v.error && this.activeIndex === step.index) this.showStart(step); });
+    },
+    pause() { if (!this.el.paused) this.el.pause(); }
+};
+
+/* ========================================
+   TÍCH HỢP MODULE HTML CON (ModuleBridge)
+   - Parent → module : { type: "lesson-goto-local-step", module, localStep }
+   - Module → parent : { type: "lesson-local-step-completed", module, localStep }
+                       (+ tương thích MODULE_STEP_COMPLETE / LESSON_MODULE_COMPLETE
+                        mà 5 module hiện tại đã gửi)
+   - Khi module cùng origin (chạy qua web server) bridge điều khiển trực tiếp
+     DOM của module: ẩn intro/topbar/thanh step riêng, chuyển local step bằng
+     chính tab step của module → KHÔNG reload, giữ nguyên camera và dữ liệu.
+======================================== */
+const EMBED_CSS = [
+    '.intro-loader{display:none!important}',
+    '.app>.topbar{display:none!important}',
+    '.steps{display:none!important}',
+    '.stage-nav{display:none!important}',
+    '.main{padding:0!important}',
+    '.frame{border-radius:0!important;box-shadow:none!important}'
+].join('\n');
+
+const ModuleBridge = {
+    frame: $('moduleFrame'),
+    layer: $('moduleLayer'),
+    key: null,
+    loaded: false,
+    failed: false,
+    sameOrigin: false,
+    observer: null,
+    loadTimer: null,
+    syncTimer: null,
+    syncToken: 0,
+
+    init() {
+        this.frame.addEventListener('load', () => this.onLoad());
+        window.addEventListener('message', e => this.onMessage(e));
+        $('btnRetryModule').addEventListener('click', () => this.retry());
+    },
+    isActiveFor(key) {
+        const s = LESSON_STEPS[lessonState.currentStep];
+        return s.type === 'module' && s.module === key;
+    },
+    show(key, localStep, fromModule) {
+        this.layer.classList.add('show');
+        lessonState.activeModule = key;
+        if (this.key !== key) { this.load(key, localStep); return; }
+        if (this.failed) { lessonState.activeModuleLocalStep = localStep; this.showFallback(); return; }
+        if (!this.loaded) { lessonState.activeModuleLocalStep = localStep; setLoading(true); return; }
+        if (fromModule) { lessonState.activeModuleLocalStep = localStep; return; }
+        this.gotoLocal(localStep);
+    },
+    hide() {
+        this.layer.classList.remove('show');
+        setLoading(false); setFallback(false);
+        this.syncToken++; clearTimeout(this.syncTimer);
+        if (this.loaded) this.pauseMedia();
+    },
+    teardown() {
+        clearTimeout(this.loadTimer); clearTimeout(this.syncTimer);
+        this.syncToken++;
+        if (this.observer) { this.observer.disconnect(); this.observer = null; }
+    },
+    load(key, localStep) {
+        this.teardown();
+        this.key = key; this.loaded = false; this.failed = false; this.sameOrigin = false;
+        lessonState.activeModule = key;
+        lessonState.activeModuleLocalStep = localStep;
+        setFallback(false); setLoading(true);
+        this.frame.setAttribute('src', MODULE_MAP[key].src);
+        this.loadTimer = setTimeout(() => this.fail('Quá thời gian chờ tải mô phỏng.'), 30000);
+    },
+    retry() {
+        if (!this.key) return;
+        const key = this.key;
+        this.key = null;
+        this.load(key, lessonState.activeModuleLocalStep || 0);
+    },
+    onLoad() {
+        if (!this.key || !this.frame.getAttribute('src')) return;
+        clearTimeout(this.loadTimer);
+        if (this.observer) { this.observer.disconnect(); this.observer = null; }
+        let doc = null;
+        try { doc = this.frame.contentDocument; } catch (e) { doc = null; }
+        this.sameOrigin = !!(doc && doc.documentElement && doc.URL !== 'about:blank');
+        if (this.sameOrigin && !doc.getElementById('stage')) { this.fail('Không tìm thấy nội dung mô phỏng trong file.'); return; }
+        this.loaded = true; this.failed = false;
+        if (this.sameOrigin) this.embed(doc);
+        this.post({ type: 'lesson-embed', module: this.key });
+        setLoading(false);
+        if (this.isActiveFor(this.key)) this.gotoLocal(lessonState.activeModuleLocalStep || 0);
+    },
+    fail(detail) {
+        clearTimeout(this.loadTimer);
+        this.failed = true; this.loaded = false;
+        setLoading(false);
+        $('fallbackDetail').textContent = detail || '';
+        if (this.isActiveFor(this.key)) this.showFallback();
+    },
+    showFallback() { setLoading(false); setFallback(true); },
+    embed(doc) {
+        if (!doc.getElementById('lesson-embed-style')) {
+            const st = doc.createElement('style');
+            st.id = 'lesson-embed-style'; st.textContent = EMBED_CSS;
+            (doc.head || doc.documentElement).appendChild(st);
+        }
+        const intro = doc.getElementById('introLoader'), explore = doc.getElementById('btnExplore');
+        if (intro && explore && intro.style.display !== 'none') explore.click();
+        const mStage = doc.getElementById('stage');
+        const Observer = this.frame.contentWindow.MutationObserver || MutationObserver;
+        this.observer = new Observer(() => this.onModuleStepChange(Number(mStage.dataset.step)));
+        this.observer.observe(mStage, { attributes: true, attributeFilter: ['data-step'] });
+    },
+    moduleDoc() {
+        if (!this.sameOrigin) return null;
+        try { return this.frame.contentDocument; } catch (e) { return null; }
+    },
+    post(msg) {
+        try { if (this.frame.contentWindow) this.frame.contentWindow.postMessage(msg, '*'); } catch (e) { /* module chưa sẵn sàng */ }
+    },
+    gotoLocal(localStep) {
+        lessonState.activeModuleLocalStep = localStep;
+        if (!this.loaded) return;
+        this.post({ type: 'lesson-goto-local-step', module: this.key, localStep });
+        if (this.sameOrigin) this.directGoto(localStep, ++this.syncToken, 0);
+    },
+    directGoto(localStep, token, attempt) {
+        if (token !== this.syncToken) return;
+        const doc = this.moduleDoc(); if (!doc) return;
+        const mStage = doc.getElementById('stage'); if (!mStage) return;
+        if (Number(mStage.dataset.step) === localStep) return;
+        const tab = doc.querySelector('.step[data-step="' + localStep + '"]');
+        if (!tab) return;
+        if (tab.classList.contains('locked')) {
+            /* Khóa nội bộ của module chưa mở (vd. module vừa được tải lại khi quay về từ module khác)
+               → đưa parent về đúng local step mà module đang hiển thị */
+            const actual = Number(mStage.dataset.step) || 0;
+            const g = MODULE_MAP[this.key].globalSteps[actual];
+            showToast('Em hãy thực hiện lại phần trước trong mô phỏng để mở phần này nhé.', 4200);
+            if (g) setTimeout(() => goToStep(g - 1, { fromModule: true }), 300);
+            return;
+        }
+        tab.click();
+        if (attempt < 12) this.syncTimer = setTimeout(() => this.directGoto(localStep, token, attempt + 1), 400);
+    },
+    onModuleStepChange(local) {
+        if (!Number.isInteger(local) || !this.isActiveFor(this.key)) return;
+        if (local === lessonState.activeModuleLocalStep) return;
+        const g = MODULE_MAP[this.key].globalSteps[local];
+        if (!g) return;
+        if (g - 1 <= lessonState.unlockedMax) {
+            lessonState.activeModuleLocalStep = local;
+            goToStep(g - 1, { fromModule: true });
+        }
+    },
+    pauseMedia() {
+        this.post({ type: 'lesson-pause', module: this.key });
+        const doc = this.moduleDoc(); if (!doc) return;
+        const vb = doc.getElementById('btnVoice');
+        if (vb && vb.getAttribute('aria-pressed') === 'true') vb.click();
+        doc.querySelectorAll('video,audio').forEach(m => { try { m.pause(); } catch (e) { /* bỏ qua */ } });
+    },
+    keyFromModuleId(id) {
+        if (MODULE_MAP[id]) return id;
+        return Object.keys(MODULE_MAP).find(k => MODULE_MAP[k].moduleId === id) || null;
+    },
+    onMessage(e) {
+        if (!this.frame.contentWindow || e.source !== this.frame.contentWindow) return;
+        const d = e.data;
+        if (!d || typeof d !== 'object') return;
+        const key = this.keyFromModuleId(d.module);
+        if (!key || key !== this.key) return;
+        const map = MODULE_MAP[key];
+        let locals = [];
+        if (d.type === 'lesson-local-step-completed') locals = [Number(d.localStep)];
+        else if (d.type === 'MODULE_STEP_COMPLETE') locals = [Number(d.step) - 1];
+        else if (d.type === 'LESSON_MODULE_COMPLETE') locals = map.globalSteps.map((_, i) => i);
+        else return;
+        locals.forEach(l => {
+            const g = map.globalSteps[l];
+            if (g) completeStep(g - 1, { announce: true });
+        });
+    }
+};
+
+function setLoading(on) { $('loadingEl').classList.toggle('show', !!on); }
+function setFallback(on) {
+    $('fallback').classList.toggle('show', !!on);
+    if (on) $('btnRetryModule').focus({ preventScroll: true });
+}
+
+/* ========================================
+   THÀNH PHẦN TƯƠNG TÁC 2D DÙNG CHUNG
+   (modal kết luận · trắc nghiệm · kéo thả pointer events)
+======================================== */
+const INTERACTIONS = {};
+
+function ixState(panel) {
+    if (!lessonState.interactionState[panel]) lessonState.interactionState[panel] = INTERACTIONS[panel].init();
+    return lessonState.interactionState[panel];
+}
+function isPanelActive(panel) {
+    const s = LESSON_STEPS[lessonState.currentStep];
+    return ixLayer.classList.contains('show') && s.type === 'interaction' && s.panel === panel;
+}
+function renderPanel(step) {
+    const sec = $('ix-' + step.panel);
+    INTERACTIONS[step.panel].render(sec, ixState(step.panel), step);
+}
+function showInteraction(step) {
+    ixLayer.classList.add('show');
+    $('ix-' + step.panel).hidden = false;
+    renderPanel(step);
+}
+function hideInteractions() {
+    closeModal();
+    ixLayer.classList.remove('show');
+    ixLayer.querySelectorAll('.ix').forEach(sec => { sec.hidden = true; sec.innerHTML = ''; });
+}
+function finishInteraction(index) {
+    closeModal();
+    completeStep(index);
+    if (index < LAST_INDEX) goToStep(index + 1);
+}
+
+function openModal(o) {
+    modalCard.innerHTML = `<div class="ov-kicker">${esc(o.kicker)}</div><h2 id="ixModalTitle">${esc(o.title)}</h2>${o.body}<div class="ov-actions"></div>`;
+    const box = modalCard.querySelector('.ov-actions');
+    o.actions.forEach(a => addBtn(box, a.label, a.alt, a.fn));
+    modal.hidden = false;
+    const primary = box.querySelector('.btn:not(.alt)') || box.querySelector('.btn');
+    if (primary) primary.focus({ preventScroll: true });
+    if (o.voice) playVoice(o.voice);
+}
+function closeModal() {
+    if (modal.hidden) return;
+    modal.hidden = true;
+    modalCard.innerHTML = '';
+    stopVoice();
+}
+modal.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); closeModal(); } });
+
+/* ---------- Trắc nghiệm ---------- */
+function optsHTML(q) {
+    return `<div class="opts">${q.opts.map((o, k) =>
+        `<button type="button" class="opt" data-k="${k}"><b>${'ABCD'[k]}</b><span>${esc(o)}</span></button>`).join('')}</div>
+        <div class="fb" aria-live="polite"></div>`;
+}
+function bindMCQ(root, q, o) {
+    const opts = [...root.querySelectorAll('.opt')], fb = root.querySelector('.fb');
+    const markSolved = () => {
+        opts.forEach((b, k) => {
+            b.disabled = true;
+            if (k === q.correct) { b.classList.add('ok'); b.querySelector('b').textContent = '✓'; b.setAttribute('aria-label', b.textContent.slice(1) + ' – đáp án đúng'); }
+        });
+        fb.className = 'fb ok'; fb.textContent = '✓ Chính xác!';
+    };
+    if (o.solved) { markSolved(); return; }
+    let busy = false;
+    opts.forEach((b, k) => b.addEventListener('click', () => {
+        if (busy) return;
+        if (k === q.correct) { markSolved(); sfx('correct'); o.onSolved(); return; }
+        busy = true;
+        b.classList.add('bad');
+        fb.className = 'fb bad'; fb.textContent = o.wrongMsg;
+        sfx('wrong');
+        setTimeout(() => { b.classList.remove('bad'); busy = false; }, 700);
+    }));
+}
+
+/* ---------- Chuỗi câu hỏi có tiến trình "Câu i / n" ---------- */
+function renderQuizSequence(sec, st, cfg) {
+    const n = cfg.items.length;
+    if (!Array.isArray(st.solved)) st.solved = [];
+    const firstOpen = () => { for (let k = 0; k < n; k++) if (!st.solved[k]) return k; return n; };
+    if (!Number.isInteger(st.q) || st.q < 0 || st.q >= n || (st.q > firstOpen() && firstOpen() < n)) st.q = Math.min(firstOpen(), n - 1);
+
+    sec.innerHTML = `<div class="ix-card">
+        <div class="ix-head">
+          <div><div class="ix-kicker">${esc(cfg.kicker)}</div><h2 class="ix-title">${esc(cfg.title)}</h2></div>
+          <div class="q-progress"><span class="q-count" aria-live="polite"></span><div class="q-dots" role="group" aria-label="Chọn câu hỏi"></div></div>
+        </div>
+        <div class="${cfg.aside ? 'split' : ''}">
+          ${cfg.aside ? `<aside class="ix-aside">${cfg.aside}</aside>` : ''}
+          <div class="ix-main">
+            ${cfg.lead ? `<p class="ix-lead">${esc(cfg.lead)}</p>` : ''}
+            <div class="q-host"></div>
+            <div class="ix-actions"></div>
+          </div>
+        </div>
+      </div>`;
+    const host = sec.querySelector('.q-host'), dots = sec.querySelector('.q-dots');
+    const count = sec.querySelector('.q-count'), actions = sec.querySelector('.ix-actions');
+
+    const go = k => { st.q = k; drawQuestion(true); };
+    const reset = () => { st.solved = []; st.q = 0; if (cfg.onReset) cfg.onReset(); drawQuestion(true); };
+    function drawDots() {
+        const open = firstOpen();
+        dots.innerHTML = cfg.items.map((_, k) =>
+            `<button type="button" class="q-dot${st.solved[k] ? ' ok' : ''}${k === st.q ? ' cur' : ''}" data-k="${k}"
+              aria-label="Câu ${k + 1}${st.solved[k] ? ' – đã trả lời đúng' : ''}" ${k === st.q ? 'aria-current="true"' : ''} ${k > open ? 'disabled' : ''}>${st.solved[k] ? '✓' : k + 1}</button>`).join('');
+    }
+    dots.addEventListener('click', e => {
+        const b = e.target.closest('.q-dot');
+        if (b && !b.disabled) go(Number(b.dataset.k));
+    });
+    function drawActions() {
+        actions.innerHTML = '';
+        const i = st.q, allDone = firstOpen() === n;
+        if (i > 0) addBtn(actions, '◀ CÂU TRƯỚC', true, () => go(i - 1));
+        if (st.solved[i] && i < n - 1) addBtn(actions, 'CÂU TIẾP THEO ▶', false, () => go(i + 1));
+        if (allDone) {
+            addBtn(actions, 'LÀM LẠI', true, reset);
+            addBtn(actions, cfg.reviewLabel || 'XEM KẾT LUẬN', false, cfg.onAllDone);
+        }
+    }
+    function drawQuestion(focus) {
+        const i = st.q, item = cfg.items[i], qid = 'q-' + cfg.panel + '-' + i;
+        count.textContent = `Câu ${i + 1} / ${n}`;
+        drawDots();
+        host.innerHTML = `<div class="q-box" role="group" aria-labelledby="${qid}">
+            <div class="q-text" id="${qid}" tabindex="-1">${esc(item.q)}</div><div class="q-body"></div></div>`;
+        const body = host.querySelector('.q-body');
+        const onSolved = () => {
+            if (st.solved[i]) return;
+            st.solved[i] = true;
+            drawDots(); drawActions();
+            const primary = actions.querySelector('.btn:not(.alt)');
+            if (primary) primary.focus({ preventScroll: true });
+            if (firstOpen() === n) setTimeout(() => { if (isPanelActive(cfg.panel) && st.q === i) cfg.onAllDone(); }, 750);
+        };
+        if (item.type === 'mcq') {
+            body.innerHTML = optsHTML(item);
+            bindMCQ(body, item, { solved: !!st.solved[i], onSolved, wrongMsg: item.wrong || cfg.wrongMsg });
+        } else {
+            item.build(body, onSolved);
+        }
+        drawActions();
+        if (focus) {
+            const card = sec.querySelector('.ix-card');
+            card.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+            const f = host.querySelector('.opt:not(:disabled), .dcard:not(.placed)') || host.querySelector('.q-text');
+            if (f) f.focus({ preventScroll: true });
+        }
+    }
+    drawQuestion(false);
+}
+
+/* ---------- Kéo – thả bằng pointer events (chuột · cảm ứng · bút) + chạm/bàn phím ---------- */
+function mountDnD(host, cfg) {
+    host.innerHTML = `<div class="dnd">
+        <div class="dnd-tray" role="group" aria-label="${esc(cfg.trayLabel || 'Các thẻ cần xếp')}"></div>
+        ${cfg.zonesHTML}
+        <div class="fb" aria-live="polite"></div>
+      </div>`;
+    const root = host.firstElementChild, tray = root.querySelector('.dnd-tray'), fb = root.querySelector('.fb');
+    const zones = [...root.querySelectorAll('.dz')];
+    const byId = {};
+    cfg.cards.forEach(c => { byId[c.id] = c; });
+    const zoneItems = zid => root.querySelector('.dz[data-zone="' + zid + '"] .dz-items');
+
+    function cardEl(c) {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'dcard'; b.dataset.card = c.id;
+        b.innerHTML = (c.icon ? `<span class="dc-ic" aria-hidden="true">${c.icon}</span>` : '') + `<span class="dc-tx">${esc(c.text)}</span>`;
+        b.setAttribute('aria-pressed', 'false');
+        return b;
+    }
+    function markPlaced(el, zid) {
+        el.classList.add('placed');
+        el.removeAttribute('aria-pressed');
+        el.setAttribute('aria-disabled', 'true');
+        el.tabIndex = -1;
+        el.setAttribute('aria-label', byId[el.dataset.card].text + ' – đã xếp đúng');
+        el.insertAdjacentHTML('beforeend', '<i class="dc-ok" aria-hidden="true">✓</i>');
+        zoneItems(zid).appendChild(el);
+    }
+    cfg.cards.forEach(c => {
+        const el = cardEl(c);
+        if (cfg.placed[c.id]) markPlaced(el, cfg.placed[c.id]); else tray.appendChild(el);
+    });
+    const isDone = () => cfg.cards.every(c => cfg.placed[c.id]);
+    const syncTray = () => tray.classList.toggle('empty', !tray.querySelector('.dcard'));
+    syncTray();
+    if (isDone()) { fb.className = 'fb ok'; fb.textContent = '✓ Em đã xếp đúng tất cả các thẻ.'; }
+
+    let selected = null, drag = null, suppressUntil = 0;
+    function select(el) {
+        if (selected) { selected.classList.remove('selected'); selected.setAttribute('aria-pressed', 'false'); }
+        selected = el;
+        root.classList.toggle('has-sel', !!el);
+        if (el) { el.classList.add('selected'); el.setAttribute('aria-pressed', 'true'); }
+    }
+    const zoneAt = (x, y) => zones.find(z => {
+        const r = z.getBoundingClientRect();
+        return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+    }) || null;
+    const setOver = z => zones.forEach(k => k.classList.toggle('over', k === z));
+    function sendBack(el) {
+        el.classList.remove('dragging');
+        el.classList.add('back');
+        el.style.transform = '';
+        setTimeout(() => el.classList.remove('back'), 280);
+    }
+    function attempt(el, zone, viaKeyboard) {
+        const c = byId[el.dataset.card], zid = zone.dataset.zone;
+        if (cfg.canDrop(c, zid, cfg.placed, byId)) {
+            cfg.placed[c.id] = zid;
+            el.classList.remove('dragging', 'selected', 'back');
+            el.style.transform = '';
+            select(null);
+            markPlaced(el, zid);
+            syncTray();
+            fb.className = 'fb ok'; fb.textContent = '✓ Chính xác!';
+            sfx('correct');
+            if (isDone()) { if (cfg.onComplete) cfg.onComplete(); return; }
+            if (viaKeyboard) { const nx = tray.querySelector('.dcard'); if (nx) nx.focus({ preventScroll: true }); }
+        } else {
+            sendBack(el);
+            select(null);
+            zone.classList.remove('shake'); void zone.offsetWidth; zone.classList.add('shake');
+            setTimeout(() => zone.classList.remove('shake'), 400);
+            fb.className = 'fb bad'; fb.textContent = cfg.wrongMsg;
+            sfx('wrong');
+            if (viaKeyboard) el.focus({ preventScroll: true });
+        }
+    }
+    root.addEventListener('pointerdown', e => {
+        const el = e.target.closest('.dcard');
+        if (!el || el.classList.contains('placed') || drag) return;
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        const sc = root.closest('.ix-card');
+        drag = { el, id: e.pointerId, x0: e.clientX, y0: e.clientY, moved: false, sc, st0: sc ? sc.scrollTop : 0 };
+        try { el.setPointerCapture(e.pointerId); } catch (err) { /* trình duyệt cũ */ }
+    });
+    root.addEventListener('pointermove', e => {
+        if (!drag || e.pointerId !== drag.id) return;
+        const dx = e.clientX - drag.x0, dy = e.clientY - drag.y0;
+        if (!drag.moved) {
+            if (Math.hypot(dx, dy) < 6) return;
+            drag.moved = true; select(null); drag.el.classList.add('dragging');
+        }
+        e.preventDefault();
+        /* Tự cuộn thẻ nội dung khi kéo gần mép trên/dưới (màn hình nhỏ) */
+        let scrolled = 0;
+        if (drag.sc) {
+            const r = drag.sc.getBoundingClientRect();
+            if (e.clientY < r.top + 44) drag.sc.scrollTop -= 14;
+            else if (e.clientY > r.bottom - 44) drag.sc.scrollTop += 14;
+            scrolled = drag.sc.scrollTop - drag.st0;
+        }
+        drag.el.style.transform = `translate(${dx}px,${dy + scrolled}px)`;
+        setOver(zoneAt(e.clientX, e.clientY));
+    });
+    const finishDrag = (e, cancelled) => {
+        if (!drag || e.pointerId !== drag.id) return;
+        const el = drag.el, moved = drag.moved;
+        drag = null; setOver(null);
+        try { el.releasePointerCapture(e.pointerId); } catch (err) { /* đã nhả */ }
+        if (!moved) return;
+        suppressUntil = performance.now() + 400;
+        const zone = cancelled ? null : zoneAt(e.clientX, e.clientY);
+        if (zone) attempt(el, zone, false); else sendBack(el);
+    };
+    root.addEventListener('pointerup', e => finishDrag(e, false));
+    root.addEventListener('pointercancel', e => finishDrag(e, true));
+    root.addEventListener('click', e => {
+        if (performance.now() < suppressUntil) return;
+        const el = e.target.closest('.dcard');
+        if (el) {
+            if (el.classList.contains('placed')) return;
+            select(selected === el ? null : el);
+            if (selected) { fb.className = 'fb'; fb.textContent = 'Đã chọn thẻ “' + byId[el.dataset.card].text + '”. Hãy chạm vào ô phù hợp.'; }
+            return;
+        }
+        const zone = e.target.closest('.dz');
+        if (!zone) return;
+        if (selected) attempt(selected, zone, e.detail === 0);
+        else if (e.target.closest('.dz-head')) { fb.className = 'fb'; fb.textContent = 'Hãy chọn một thẻ trước, rồi chọn ô này nhé.'; }
+    });
+    root.addEventListener('keydown', e => { if (e.key === 'Escape' && selected) { e.stopPropagation(); select(null); } });
+    root.addEventListener('dragstart', e => e.preventDefault());
+}
+function zonesColumnsHTML(zones) {
+    return `<div class="dz-wrap cols">${zones.map(z =>
+        `<div class="dz ${z.id}" data-zone="${z.id}"><button type="button" class="dz-head">${esc(z.label)}</button><div class="dz-items"></div></div>`).join('')}</div>`;
+}
+const STATE_ZONES = [
+    { id: 'solid', label: 'Chất rắn' },
+    { id: 'liquid', label: 'Chất lỏng' },
+    { id: 'gas', label: 'Chất khí' }
+];
+
+/* ========================================
+   STEP 2 – BA TRẠNG THÁI
+======================================== */
+const STEP2_CARDS = [
+    { id: 'water', text: 'Nước',      icon: '💧', accept: ['liquid'] },
+    { id: 'stone', text: 'Viên đá',   icon: '🪨', accept: ['solid'] },
+    { id: 'air',   text: 'Không khí', icon: '🌬️', accept: ['gas'] },
+    { id: 'oil',   text: 'Dầu ăn',    icon: '🫒', accept: ['liquid'] },
+    { id: 'steam', text: 'Hơi nước',  icon: '♨️', accept: ['gas'] },
+    { id: 'salt',  text: 'Muối',      icon: '🧂', accept: ['solid'] }
+];
+INTERACTIONS.step2 = {
+    init: () => ({ placed: {}, done: false }),
+    render(sec, st, step) {
+        sec.innerHTML = `<div class="ix-card">
+            <div class="ix-kicker">Nhiệm vụ</div>
+            <h2 class="ix-title">Hãy phân loại các chất sau vào đúng trạng thái: Rắn – Lỏng – Khí.</h2>
+            <p class="ix-sub">Kéo từng thẻ thả vào đúng ô. Em cũng có thể chạm vào một thẻ rồi chạm vào ô trạng thái phù hợp.</p>
+            <div class="dnd-host"></div>
+            <div class="ix-actions"></div>
+          </div>`;
+        const actions = sec.querySelector('.ix-actions');
+        const conclude = () => openModal({
+            kicker: 'Nhận biết ba trạng thái của chất',
+            title: 'EM RÚT RA ĐƯỢC GÌ?',
+            body: `<div class="chain">${nodeHTML('solid')}${nodeHTML('liquid')}${nodeHTML('gas')}</div>
+                   <p class="ov-point">Chất có thể tồn tại ở ba trạng thái thường gặp: rắn, lỏng và khí.</p>`,
+            actions: [
+                { label: 'XEM LẠI BÀI LÀM', alt: true, fn: closeModal },
+                { label: 'TIẾP TỤC', fn: () => finishInteraction(step.index) }
+            ]
+        });
+        const drawActions = () => {
+            actions.innerHTML = '';
+            if (!st.done) return;
+            addBtn(actions, 'LÀM LẠI', true, () => { st.placed = {}; st.done = false; renderPanel(step); });
+            addBtn(actions, 'XEM KẾT LUẬN', false, conclude);
+        };
+        mountDnD(sec.querySelector('.dnd-host'), {
+            zonesHTML: zonesColumnsHTML(STATE_ZONES),
+            cards: STEP2_CARDS,
+            placed: st.placed,
+            canDrop: (c, zid) => c.accept.indexOf(zid) !== -1,
+            wrongMsg: 'Chưa đúng, em hãy thử lại nhé!',
+            onComplete: () => {
+                st.done = true; drawActions();
+                setTimeout(() => { if (isPanelActive('step2')) conclude(); }, 650);
+            }
+        });
+        drawActions();
+    }
+};
+
+/* ========================================
+   STEP 9 – ÔN TẬP 1
+======================================== */
+const STEP9_CARDS = [
+    { id: 'c1', text: 'Có hình dạng xác định',                  accept: ['solid'] },
+    { id: 'c2', text: 'Không có hình dạng xác định',            accept: ['liquid', 'gas'] },
+    { id: 'c3', text: 'Chiếm khoảng không gian không xác định', accept: ['gas'] },
+    { id: 'c4', text: 'Chiếm khoảng không gian xác định',       accept: ['solid', 'liquid'] },
+    { id: 'c5', text: 'Có hình dạng của vật chứa',              accept: ['liquid', 'gas'] },
+    { id: 'c6', text: 'Giữ nguyên hình dạng khi đổi vật chứa',  accept: ['solid'] },
+    { id: 'c7', text: 'Không có hình dạng xác định',            accept: ['liquid', 'gas'] },
+    { id: 'c8', text: 'Chiếm khoảng không gian xác định',       accept: ['solid', 'liquid'] },
+    { id: 'c9', text: 'Có hình dạng của vật chứa',              accept: ['liquid', 'gas'] }
+];
+/* Thẻ trùng nội dung là bản sao độc lập: hợp lệ khi đúng trạng thái và ô đó chưa có đặc điểm này */
+function canDropUniqueText(c, zid, placed, byId) {
+    if (c.accept.indexOf(zid) === -1) return false;
+    return !Object.keys(placed).some(id => placed[id] === zid && byId[id].text === c.text);
+}
+INTERACTIONS.step9 = {
+    init: () => ({ q: 0, solved: [], placed: {} }),
+    render(sec, st, step) {
+        renderQuizSequence(sec, st, {
+            panel: 'step9',
+            kicker: 'Ôn tập',
+            title: 'Ôn tập: Rắn – lỏng – khí',
+            wrongMsg: 'Chưa chính xác. Hãy nhớ lại điều em vừa quan sát.',
+            items: [
+                { type: 'mcq', q: 'Chất ở trạng thái nào có hình dạng xác định?',
+                  opts: ['Chất rắn', 'Chất lỏng', 'Chất khí'], correct: 0 },
+                { type: 'mcq', q: 'Khi rót nước từ chai sang cốc, hình dạng của nước thay đổi theo vật chứa. Điều này cho thấy:',
+                  opts: ['Chất lỏng có hình dạng xác định', 'Chất lỏng không có hình dạng xác định và có hình dạng của vật chứa', 'Chất lỏng không chiếm không gian'], correct: 1 },
+                { type: 'mcq', q: 'Chất khí có đặc điểm nào sau đây?',
+                  opts: ['Có hình dạng xác định', 'Có hình dạng của vật chứa', 'Luôn giữ nguyên hình dạng dù đổi vật chứa'], correct: 1 },
+                { type: 'mcq', q: 'Phát biểu nào đúng?',
+                  opts: ['Chất lỏng chiếm một khoảng không gian xác định', 'Chất lỏng không chiếm không gian', 'Cùng một lượng chất lỏng có thể tự biến thành lượng lớn hơn'], correct: 0 },
+                { type: 'dnd', q: 'Kéo mỗi đặc điểm vào đúng trạng thái của chất. Một số đặc điểm có ở nhiều trạng thái nên có nhiều thẻ giống nhau.',
+                  build: (body, onSolved) => mountDnD(body, {
+                      zonesHTML: zonesColumnsHTML([{ id: 'solid', label: 'Rắn' }, { id: 'liquid', label: 'Lỏng' }, { id: 'gas', label: 'Khí' }]),
+                      cards: STEP9_CARDS,
+                      placed: st.placed,
+                      trayLabel: 'Các thẻ đặc điểm',
+                      canDrop: canDropUniqueText,
+                      wrongMsg: 'Chưa chính xác. Hãy nhớ lại điều em vừa quan sát.',
+                      onComplete: onSolved
+                  }) }
+            ],
+            onReset: () => { st.placed = {}; },
+            onAllDone: () => openModal({
+                kicker: 'Hoàn thành ôn tập',
+                title: 'EM RÚT RA ĐƯỢC GÌ?',
+                body: `<div class="sum3">
+                    <div class="s3 solid"><h4>RẮN</h4><ul><li>Hình dạng xác định</li><li>Khoảng không gian xác định</li></ul></div>
+                    <div class="s3 liquid"><h4>LỎNG</h4><ul><li>Không có hình dạng xác định</li><li>Có hình dạng của vật chứa</li><li>Khoảng không gian xác định</li></ul></div>
+                    <div class="s3 gas"><h4>KHÍ</h4><ul><li>Không có hình dạng xác định</li><li>Có hình dạng của vật chứa</li><li>Khoảng không gian không xác định</li></ul></div>
+                  </div>`,
+                actions: [
+                    { label: 'XEM LẠI BÀI LÀM', alt: true, fn: closeModal },
+                    { label: 'TIẾP TỤC', fn: () => finishInteraction(step.index) }
+                ]
+            })
+        });
+    }
+};
+
+/* ========================================
+   STEP 14 – KHÁM PHÁ
+======================================== */
+INTERACTIONS.step14 = {
+    init: () => ({ q: 0, solved: [] }),
+    render(sec, st, step) {
+        renderQuizSequence(sec, st, {
+            panel: 'step14',
+            kicker: 'Câu hỏi khám phá',
+            title: 'Sự biến đổi trạng thái của nến',
+            aside: `<div class="flows" aria-label="Tóm tắt thí nghiệm với nến">
+                <div class="flow"><span class="fl-node solid">NẾN RẮN</span><span class="fl-arrow">↓</span><span class="fl-act heat">🔥 ĐUN NÓNG</span><span class="fl-arrow">↓</span><span class="fl-node liquid">NẾN LỎNG</span></div>
+                <div class="flow"><span class="fl-node liquid">NẾN LỎNG</span><span class="fl-arrow">↓</span><span class="fl-act cool">❄️ ĐỂ NGUỘI</span><span class="fl-arrow">↓</span><span class="fl-node solid">NẾN RẮN</span></div>
+              </div>`,
+            lead: 'Hãy nhớ lại thí nghiệm vừa thực hiện và trả lời các câu hỏi sau.',
+            wrongMsg: 'Chưa đúng, em hãy thử lại nhé!',
+            items: [
+                { type: 'mcq', q: 'Khi được đun nóng, nến đã thay đổi như thế nào?',
+                  opts: ['Từ rắn sang lỏng', 'Từ lỏng sang rắn', 'Từ khí sang lỏng'], correct: 0 },
+                { type: 'mcq', q: 'Khi ngừng đun và để nguội, nến đã thay đổi như thế nào?',
+                  opts: ['Từ rắn sang khí', 'Từ lỏng sang rắn', 'Từ khí sang rắn'], correct: 1 },
+                { type: 'mcq', q: 'Từ thí nghiệm trên, em có nhận xét gì?',
+                  opts: ['Trạng thái của chất luôn luôn không thay đổi', 'Chất có thể chuyển từ trạng thái này sang trạng thái khác', 'Chỉ chất khí mới có thể thay đổi trạng thái'], correct: 1 }
+            ],
+            onAllDone: () => openModal({
+                kicker: 'Hình thành kiến thức',
+                title: 'EM RÚT RA ĐƯỢC GÌ?',
+                voice: 'step14Conclusion',
+                body: `<div class="tri duo" role="img" aria-label="Rắn đun nóng thành lỏng, lỏng để nguội thành rắn">
+                    ${nodeHTML('solid')}
+                    <div class="tri-arr"><span class="fw">đun nóng ⟶</span><span class="bk">⟵ để nguội</span></div>
+                    ${nodeHTML('liquid')}
+                  </div>
+                  <p class="ov-point">Ở nhiệt độ phù hợp, chất có thể chuyển từ trạng thái này sang trạng thái khác.</p>`,
+                actions: [
+                    { label: 'XEM LẠI CÂU HỎI', alt: true, fn: closeModal },
+                    { label: 'TIẾP TỤC', fn: () => finishInteraction(step.index) }
+                ]
+            })
+        });
+    }
+};
+
+/* ========================================
+   STEP 16 – NƯỚC RỬA TAY
+======================================== */
+const HAND_SVG = `<svg class="hand-svg" viewBox="0 0 220 200" role="img" aria-label="Bàn tay vừa xoa dung dịch rửa tay chứa cồn, các giọt dung dịch nhỏ dần rồi biến mất">
+  <circle cx="110" cy="108" r="88" fill="#ffffff" opacity=".7"/>
+  <g transform="translate(152 34)">
+    <rect x="0" y="24" width="42" height="64" rx="11" fill="#d9eef8" stroke="#2a78b8" stroke-width="2"/>
+    <rect x="13" y="10" width="16" height="16" rx="3" fill="#2f827d"/>
+    <rect x="17" y="2" width="22" height="8" rx="3" fill="#2f827d"/>
+    <text x="21" y="61" font-size="11" text-anchor="middle" fill="#0f3f3d" font-weight="700" font-family="Roboto,Arial,sans-serif">CỒN</text>
+  </g>
+  <path d="M58 186 L58 122 Q58 110 66 108 L66 72 Q66 63 73 63 Q80 63 80 72 L80 102 L82 60 Q82 51 89 51 Q96 51 96 60 L96 100 L98 56 Q98 47 105 47 Q112 47 112 56 L112 102 L114 66 Q114 57 121 57 Q128 57 128 66 L128 130 L140 114 Q146 106 153 111 Q159 116 154 124 L132 162 Q124 178 110 186 Z"
+        fill="#f6c9a5" stroke="#d9a07a" stroke-width="2" stroke-linejoin="round"/>
+  <ellipse class="drop" cx="84" cy="142" rx="7" ry="5" fill="#8fc7ea"/>
+  <ellipse class="drop d2" cx="106" cy="132" rx="6" ry="4.5" fill="#8fc7ea"/>
+  <ellipse class="drop d3" cx="116" cy="156" rx="7" ry="5" fill="#8fc7ea"/>
+  <ellipse class="drop d4" cx="94" cy="166" rx="5.5" ry="4" fill="#8fc7ea"/>
+  <g stroke="#7f9fb3" stroke-width="2.6" fill="none" stroke-linecap="round">
+    <path class="vp" d="M84 132 q-5 -6 0 -12 q5 -6 0 -12"/>
+    <path class="vp v2" d="M106 122 q-5 -6 0 -12 q5 -6 0 -12"/>
+    <path class="vp v3" d="M116 146 q-5 -6 0 -12 q5 -6 0 -12"/>
+    <path class="vp v4" d="M94 156 q-5 -6 0 -12 q5 -6 0 -12"/>
+  </g>
+</svg>`;
+INTERACTIONS.step16 = {
+    init: () => ({ q: 0, solved: [] }),
+    render(sec, st, step) {
+        renderQuizSequence(sec, st, {
+            panel: 'step16',
+            kicker: 'Vận dụng',
+            title: 'Vì sao nước rửa tay khô nhanh?',
+            aside: `<figure class="scene-fig">${HAND_SVG}
+                <figcaption><b>Tình huống</b>Một bạn nhỏ dùng dung dịch rửa tay chứa cồn. Sau một lúc, tay khô dù không dùng khăn.</figcaption></figure>`,
+            lead: 'Bạn nhỏ không dùng khăn lau nhưng bàn tay vẫn nhanh chóng khô. Vì sao?',
+            wrongMsg: 'Chưa đúng, em hãy thử lại nhé!',
+            items: [
+                { type: 'mcq', q: 'Vì sao dung dịch rửa tay chứa cồn có thể khô nhanh?',
+                  opts: ['Vì cồn biến thành chất rắn', 'Vì cồn dễ bay hơi vào không khí', 'Vì cồn thấm hoàn toàn vào da', 'Vì bàn tay hút hết cồn'], correct: 1,
+                  wrong: 'Chưa đúng. Hãy nhớ lại hiện tượng cồn bay hơi ở hoạt động trước.' },
+                { type: 'mcq', q: 'Trong quá trình bay hơi, cồn chuyển chủ yếu từ trạng thái nào sang trạng thái nào?',
+                  opts: ['Rắn → Lỏng', 'Lỏng → Khí', 'Khí → Lỏng', 'Lỏng → Rắn'], correct: 1 }
+            ],
+            onAllDone: () => openModal({
+                kicker: 'Vì sao nước rửa tay khô nhanh?',
+                title: 'EM RÚT RA ĐƯỢC GÌ?',
+                body: `<div class="tr-row">${trHTML('liquid', 'gas')}</div>
+                  <p class="ov-point">Cồn là chất lỏng dễ bay hơi. Khi cồn bay hơi từ trạng thái lỏng sang trạng thái khí, lượng dung dịch trên tay giảm dần nên tay nhanh khô.</p>`,
+                actions: [
+                    { label: 'XEM LẠI CÂU HỎI', alt: true, fn: closeModal },
+                    { label: 'TIẾP TỤC', fn: () => finishInteraction(step.index) }
+                ]
+            })
+        });
+    }
+};
+
+/* ========================================
+   STEP 19 – ÔN TẬP 2
+======================================== */
+const STEP19_CARDS = [
+    { id: 'cond',   text: 'Hơi nước ngưng tụ', icon: '💧', accept: ['g2l'] },
+    { id: 'melt',   text: 'Đá tan',            icon: '🧊', accept: ['s2l'] },
+    { id: 'evap',   text: 'Cồn bay hơi',       icon: '💨', accept: ['l2g'] },
+    { id: 'freeze', text: 'Nước đóng băng',    icon: '❄️', accept: ['l2s'] }
+];
+const slotHTML = (zid, a, b) => `<div class="dz slot" data-zone="${zid}"><button type="button" class="dz-head">${STATE_LABEL[a]} → ${STATE_LABEL[b]}</button><div class="dz-items"></div></div>`;
+const STEP19_ZONES = `<div class="cyc">
+    ${nodeHTML('solid')}
+    <div class="cyc-links">${slotHTML('s2l', 'solid', 'liquid')}${slotHTML('l2s', 'liquid', 'solid')}</div>
+    ${nodeHTML('liquid')}
+    <div class="cyc-links">${slotHTML('l2g', 'liquid', 'gas')}${slotHTML('g2l', 'gas', 'liquid')}</div>
+    ${nodeHTML('gas')}
+  </div>`;
+INTERACTIONS.step19 = {
+    init: () => ({ q: 0, solved: [], placed: {} }),
+    render(sec, st, step) {
+        renderQuizSequence(sec, st, {
+            panel: 'step19',
+            kicker: 'Ôn tập',
+            title: 'Ôn tập sự biến đổi trạng thái',
+            wrongMsg: 'Chưa đúng, em hãy thử lại nhé!',
+            items: [
+                { type: 'mcq', q: 'Một viên nước đá để ở nơi ấm dần biến thành nước. Đây là sự chuyển từ:',
+                  opts: ['Rắn → Lỏng', 'Lỏng → Rắn', 'Lỏng → Khí', 'Khí → Lỏng'], correct: 0 },
+                { type: 'mcq', q: 'Nước được để trong ngăn đông và trở thành nước đá. Đây là sự chuyển từ:',
+                  opts: ['Khí → Lỏng', 'Lỏng → Rắn', 'Rắn → Lỏng', 'Lỏng → Khí'], correct: 1 },
+                { type: 'mcq', q: 'Cồn trên bề mặt giảm dần rồi biến mất do bay hơi. Cồn chuyển từ:',
+                  opts: ['Rắn → Lỏng', 'Lỏng → Rắn', 'Lỏng → Khí', 'Khí → Rắn'], correct: 2 },
+                { type: 'mcq', q: 'Những giọt nước xuất hiện trên bề mặt lạnh do hơi nước trong không khí ngưng tụ. Đây là sự chuyển từ:',
+                  opts: ['Khí → Lỏng', 'Lỏng → Khí', 'Rắn → Lỏng', 'Lỏng → Rắn'], correct: 0 },
+                { type: 'dnd', q: 'Kéo mỗi hiện tượng vào đúng mũi tên trên sơ đồ.',
+                  build: (body, onSolved) => mountDnD(body, {
+                      zonesHTML: STEP19_ZONES,
+                      cards: STEP19_CARDS,
+                      placed: st.placed,
+                      trayLabel: 'Các hiện tượng',
+                      canDrop: (c, zid, placed) => c.accept.indexOf(zid) !== -1 && !Object.keys(placed).some(id => placed[id] === zid),
+                      wrongMsg: 'Chưa đúng, em hãy thử lại nhé!',
+                      onComplete: onSolved
+                  }) }
+            ],
+            onReset: () => { st.placed = {}; },
+            onAllDone: () => openModal({
+                kicker: 'Hoàn thành ôn tập',
+                title: 'EM RÚT RA ĐƯỢC GÌ?',
+                body: `<div class="chain" role="img" aria-label="Rắn, lỏng, khí có thể chuyển qua lại">${nodeHTML('solid')}<span class="x2" aria-hidden="true">⇄</span>${nodeHTML('liquid')}<span class="x2" aria-hidden="true">⇄</span>${nodeHTML('gas')}</div>
+                  <p class="ov-point">Chất có thể chuyển từ trạng thái này sang trạng thái khác khi điều kiện thay đổi.</p>`,
+                actions: [
+                    { label: 'XEM LẠI BÀI LÀM', alt: true, fn: closeModal },
+                    { label: 'TIẾP TỤC', fn: () => finishInteraction(step.index) }
+                ]
+            })
+        });
+    }
+};
+
+/* ========================================
+   STEP 21 – TỔNG KẾT
+======================================== */
+const ILL = {
+    stone: `<svg viewBox="0 0 80 60" aria-hidden="true"><path d="M8 44 C4 30 16 14 34 12 C52 10 70 18 73 34 C76 48 62 54 40 54 C22 54 11 52 8 44Z" fill="#9aa1a4"/><path d="M20 26 C26 18 38 16 46 18" stroke="#c4cacc" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M50 40 C56 38 60 34 62 30" stroke="#7f878a" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+    cup: `<svg viewBox="0 0 80 70" aria-hidden="true"><path d="M18 8 L62 8 L56 64 L24 64 Z" fill="#f4fafd" stroke="#7fa9c4" stroke-width="2.5" stroke-linejoin="round"/><path d="M21.4 32 L58.6 32 L56 64 L24 64 Z" fill="#5aa7dd"/><path d="M22 32 Q40 28 58 32" stroke="#bfe0f5" stroke-width="2" fill="none"/></svg>`,
+    balloon: `<svg viewBox="0 0 80 92" aria-hidden="true"><ellipse cx="40" cy="34" rx="24" ry="29" fill="#e2574c"/><ellipse cx="31" cy="23" rx="6" ry="9" fill="#f08a80"/><path d="M36 62 L44 62 L40 68 Z" fill="#c44236"/><path d="M40 68 Q34 76 42 82 Q48 86 40 92" stroke="#7a8a90" stroke-width="1.6" fill="none"/></svg>`
+};
+INTERACTIONS.step21 = {
+    init: () => ({ view: 'hub', seen1: false, seen2: false, finished: false }),
+    render(sec, st, step) {
+        const set = view => { st.view = view; renderPanel(step); };
+        const view = st.view;
+        if (view === 'card1') {
+            sec.innerHTML = `<div class="ix-card">
+                <div class="ix-kicker">Thẻ 1</div><h2 class="ix-title">ĐẶC ĐIỂM CỦA CHẤT</h2>
+                <div class="state-grid">
+                  <article class="state-card solid"><div class="ill">${ILL.stone}</div><div><h3>RẮN</h3>
+                    <ul><li>Có hình dạng xác định.</li><li>Chiếm một khoảng không gian xác định.</li></ul><div class="ex">Ví dụ: viên đá</div></div></article>
+                  <article class="state-card liquid"><div class="ill">${ILL.cup}</div><div><h3>LỎNG</h3>
+                    <ul><li>Không có hình dạng xác định.</li><li>Có hình dạng của vật chứa.</li><li>Chiếm một khoảng không gian xác định.</li></ul><div class="ex">Ví dụ: nước trong cốc</div></div></article>
+                  <article class="state-card gas"><div class="ill">${ILL.balloon}</div><div><h3>KHÍ</h3>
+                    <ul><li>Không có hình dạng xác định.</li><li>Có hình dạng của vật chứa.</li><li>Chiếm khoảng không gian không xác định.</li></ul><div class="ex">Ví dụ: không khí trong bóng bay</div></div></article>
+                </div>
+                <div class="ix-actions"></div></div>`;
+            const a = sec.querySelector('.ix-actions');
+            addBtn(a, '◀ QUAY LẠI', true, () => set('hub'));
+            addBtn(a, 'ĐÃ GHI NHỚ', false, () => { st.seen1 = true; set(st.seen2 ? 'remember' : 'hub'); }).focus({ preventScroll: true });
+            return;
+        }
+        if (view === 'card2') {
+            sec.innerHTML = `<div class="ix-card">
+                <div class="ix-kicker">Thẻ 2</div><h2 class="ix-title">SỰ BIẾN ĐỔI TRẠNG THÁI</h2>
+                <div class="tri" role="img" aria-label="Rắn nóng chảy thành lỏng, lỏng đông lại thành rắn, lỏng bay hơi thành khí, khí ngưng tụ thành lỏng">
+                  ${nodeHTML('solid')}
+                  <div class="tri-arr"><span class="fw">nóng chảy ⟶</span><span class="bk">⟵ đông lại</span></div>
+                  ${nodeHTML('liquid')}
+                  <div class="tri-arr"><span class="fw">bay hơi ⟶</span><span class="bk">⟵ ngưng tụ</span></div>
+                  ${nodeHTML('gas')}
+                </div>
+                <div class="proc-grid">
+                  <div class="proc">${trHTML('solid', 'liquid')}<h4>Nóng chảy</h4><ul><li>Đá tan</li><li>Nến nóng chảy</li></ul></div>
+                  <div class="proc">${trHTML('liquid', 'solid')}<h4>Đông lại</h4><ul><li>Nước đóng băng</li><li>Nến để nguội</li></ul></div>
+                  <div class="proc">${trHTML('liquid', 'gas')}<h4>Bay hơi</h4><ul><li>Cồn bay hơi</li></ul></div>
+                  <div class="proc">${trHTML('gas', 'liquid')}<h4>Ngưng tụ</h4><ul><li>Hơi nước tạo thành giọt nước trên bề mặt lạnh</li></ul></div>
+                </div>
+                <div class="ix-actions"></div></div>`;
+            const a = sec.querySelector('.ix-actions');
+            addBtn(a, '◀ QUAY LẠI', true, () => set('hub'));
+            addBtn(a, 'ĐÃ GHI NHỚ', false, () => { st.seen2 = true; set(st.seen1 ? 'remember' : 'hub'); }).focus({ preventScroll: true });
+            return;
+        }
+        if (view === 'remember') {
+            sec.innerHTML = `<div class="ix-card">
+                <div class="ix-kicker">Tổng kết bài học</div><h2 class="ix-title big">EM CẦN GHI NHỚ</h2>
+                <ol class="remember">
+                  <li>Chất thường tồn tại ở trạng thái rắn, lỏng hoặc khí.</li>
+                  <li>Mỗi trạng thái có những đặc điểm khác nhau về hình dạng và khoảng không gian chiếm chỗ.</li>
+                  <li>Chất có thể chuyển từ trạng thái này sang trạng thái khác khi điều kiện thay đổi.</li>
+                  <li>Những sự biến đổi trạng thái xuất hiện rất nhiều trong đời sống.</li>
+                </ol>
+                <div class="ix-actions"></div></div>`;
+            const a = sec.querySelector('.ix-actions');
+            addBtn(a, '◀ XEM LẠI CÁC THẺ', true, () => set('hub'));
+            addBtn(a, 'TIẾP TỤC', false, () => set('finish')).focus({ preventScroll: true });
+            playVoice('step21Summary');
+            return;
+        }
+        if (view === 'finish') {
+            completeStep(step.index);
+            sec.innerHTML = `<div class="ix-card finish">
+                <div class="trophy" aria-hidden="true">🎉</div>
+                <div class="ix-kicker">Khoa học 5 · Bài 4</div>
+                <h2 class="ix-title big">HOÀN THÀNH BÀI HỌC</h2>
+                <p class="ix-sub">Em đã tìm hiểu đặc điểm của chất ở trạng thái rắn, lỏng, khí và sự biến đổi trạng thái của chất.</p>
+                ${st.finished ? '<div class="done-badge">✓ Em đã hoàn thành bài học. Chúc mừng em!</div>' : ''}
+                <div class="ix-actions"></div></div>`;
+            const a = sec.querySelector('.ix-actions');
+            addBtn(a, 'XEM LẠI BÀI', true, () => goToStep(0));
+            addBtn(a, 'HOÀN THÀNH', false, () => {
+                const first = !st.finished;
+                st.finished = true;
+                renderPanel(step);
+                showToast('🎉 Chúc mừng em đã hoàn thành bài học!', 3000);
+                if (first && window.parent && window.parent !== window) {
+                    try { window.parent.postMessage({ type: 'lesson-completed', lesson: 'khoa-hoc-5-bai-4' }, '*'); } catch (e) { /* chạy độc lập */ }
+                }
+            }).focus({ preventScroll: true });
+            return;
+        }
+        /* view === 'hub' */
+        const both = st.seen1 && st.seen2;
+        sec.innerHTML = `<div class="ix-card">
+            <div class="ix-kicker">Khoa học 5 · Bài 4</div>
+            <h2 class="ix-title big">TỔNG KẾT BÀI HỌC</h2>
+            <p class="ix-sub">Chạm vào từng thẻ để ôn lại kiến thức. Xem đủ 2 thẻ để hoàn thành bài học.</p>
+            <div class="sum-grid">
+              <button type="button" class="sum-card${st.seen1 ? ' seen' : ''}" data-open="card1" aria-label="Thẻ 1: Đặc điểm của chất – ${st.seen1 ? 'đã xem' : 'chưa xem'}">
+                <span class="sum-num">1</span><span class="sum-ic" aria-hidden="true">🪨💧🎈</span>
+                <span class="sum-title">ĐẶC ĐIỂM CỦA CHẤT</span>
+                <span class="sum-status${st.seen1 ? ' seen' : ''}">${st.seen1 ? '✓ Đã xem' : 'Chưa xem'}</span>
+              </button>
+              <button type="button" class="sum-card${st.seen2 ? ' seen' : ''}" data-open="card2" aria-label="Thẻ 2: Sự biến đổi trạng thái – ${st.seen2 ? 'đã xem' : 'chưa xem'}">
+                <span class="sum-num">2</span><span class="sum-ic" aria-hidden="true">🧊💧💨</span>
+                <span class="sum-title">SỰ BIẾN ĐỔI TRẠNG THÁI</span>
+                <span class="sum-status${st.seen2 ? ' seen' : ''}">${st.seen2 ? '✓ Đã xem' : 'Chưa xem'}</span>
+              </button>
+            </div>
+            <div class="ix-actions"></div></div>`;
+        sec.querySelectorAll('.sum-card').forEach(b => b.addEventListener('click', () => set(b.dataset.open)));
+        const a = sec.querySelector('.ix-actions');
+        if (both) addBtn(a, 'EM CẦN GHI NHỚ', false, () => set('remember'));
+        if (step.completed) addBtn(a, 'HOÀN THÀNH BÀI HỌC', true, () => set('finish'));
+    }
+};
+
+/* ========================================
+   LESSON ENGINE
+======================================== */
+function renderStepBar() {
+    stepsBar.innerHTML = LESSON_STEPS.map((s, i) =>
+        `<button class="step" role="tab" id="tab-${s.id}" data-index="${i}" type="button" aria-selected="false" aria-controls="stage" tabindex="-1" title="${esc(s.name)}">` +
+        `<b>${String(s.id).padStart(2, '0')}</b><span>${esc(s.title)}</span><span class="sr-only"></span></button>`).join('');
+}
+function scrollActiveStep() {
+    const b = stepsBar.children[lessonState.currentStep];
+    if (!b) return;
+    const left = b.offsetLeft - (stepsBar.clientWidth - b.offsetWidth) / 2;
+    stepsBar.scrollTo({ left: Math.max(0, left), behavior: reduceMotion ? 'auto' : 'smooth' });
+}
+function syncStepUI() {
+    const cur = lessonState.currentStep;
+    [...stepsBar.children].forEach((b, i) => {
+        const locked = i > lessonState.unlockedMax, done = lessonState.completedSteps.has(i);
+        b.setAttribute('aria-selected', i === cur ? 'true' : 'false');
+        b.tabIndex = i === cur ? 0 : -1;
+        b.classList.toggle('locked', locked);
+        b.classList.toggle('done', done);
+        b.setAttribute('aria-disabled', locked ? 'true' : 'false');
+        b.querySelector('.sr-only').textContent = locked ? ' (đang khóa)' : (done ? ' (đã hoàn thành)' : '');
+    });
+    btnPrev.disabled = cur <= 0;
+    const nextLocked = cur >= LAST_INDEX || cur + 1 > lessonState.unlockedMax;
+    btnNext.disabled = nextLocked;
+    btnNext.classList.toggle('ready', !nextLocked && lessonState.completedSteps.has(cur) && !lessonState.visitedSteps.has(cur + 1));
+    stage.setAttribute('aria-labelledby', 'tab-' + LESSON_STEPS[cur].id);
+    scrollActiveStep();
+}
+function pulseStep(i) {
+    const b = stepsBar.children[i];
+    if (!b) return;
+    b.classList.remove('unlock'); void b.offsetWidth; b.classList.add('unlock');
+    setTimeout(() => b.classList.remove('unlock'), 3400);
+}
+function updateTools(step) {
+    const hasVoice = !!voiceUrl(step.voice);
+    $('btnReplay').hidden = step.type !== 'video';
+    btnNarration.hidden = !hasVoice;
+    stageTools.hidden = $('btnReplay').hidden && btnNarration.hidden;
+    stage.classList.toggle('has-tools', step.type === 'interaction' && hasVoice);
+    syncNarrationBtn();
+}
+function updateHint(step) {
+    if (step.type !== 'video') { stageHint.hidden = true; return; }
+    stageHint.hidden = false;
+    stageHint.textContent = step.completed ? '✓ Đã xem xong · Em có thể xem lại video' : '▶ Xem hết video để mở bước tiếp theo';
+}
+function updateHash(step) {
+    try { history.replaceState(null, '', '#step-' + step.id); } catch (e) { /* môi trường không hỗ trợ */ }
+}
+
+/* Hoàn thành Step → mở đúng Step kế tiếp (không bao giờ tự mở bằng timer) */
+function completeStep(index, opts) {
+    const announce = !!(opts && opts.announce);
+    if (!Number.isInteger(index) || index < 0 || index > LAST_INDEX) return;
+    if (index > lessonState.unlockedMax) return;
+    const isNew = !lessonState.completedSteps.has(index);
+    lessonState.completedSteps.add(index);
+    const next = Math.min(index + 1, LAST_INDEX);
+    const unlockedNew = next > lessonState.unlockedMax;
+    if (unlockedNew) lessonState.unlockedMax = next;
+    syncStepUI();
+    if (index === lessonState.currentStep) updateHint(LESSON_STEPS[index]);
+    if (unlockedNew) pulseStep(next);
+    if (announce && isNew && index === lessonState.currentStep && index < LAST_INDEX) {
+        showToast('✓ Em đã hoàn thành hoạt động này. Bấm ▶ để sang bước tiếp theo.', 3200);
+    }
+}
+
+async function goToStep(index, opts) {
+    const fromModule = !!(opts && opts.fromModule);
+    index = Number(index);
+    /* 1. kiểm tra index */
+    if (!Number.isInteger(index) || index < 0 || index > LAST_INDEX) return false;
+    if (!lessonState.entered) return false;
+    /* 3. chặn spam click */
+    if (lessonState.isSwitching) return false;
+    /* 2. kiểm tra locked */
+    if (index > lessonState.unlockedMax) {
+        showToast('🔒 Bước này đang khóa. Em hãy hoàn thành bước hiện tại để mở tiếp nhé!');
+        pulseStep(lessonState.currentStep);
+        return false;
+    }
+    if (index === lessonState.currentStep && lessonState.rendered) { syncStepUI(); return false; }
+
+    lessonState.isSwitching = true;
+    try {
+        const next = LESSON_STEPS[index];
+        const firstVisit = !lessonState.visitedSteps.has(index);
+        /* 4–6. dừng video cũ, audio cũ, ẩn interaction cũ */
+        VideoPlayer.stop();
+        stopVoice(); stopSfx();
+        hideInteractions();
+        if (next.type !== 'module') ModuleBridge.hide();
+        /* 11. cập nhật currentStep */
+        lessonState.currentStep = index;
+        /* 7–10. render đúng loại Step (module cùng iframe → chỉ gửi local Step, KHÔNG reload) */
+        if (next.type === 'video') VideoPlayer.show(next, firstVisit);
+        else if (next.type === 'interaction') showInteraction(next);
+        else ModuleBridge.show(next.module, next.localStep, fromModule);
+        lessonState.visitedSteps.add(index);
+        lessonState.rendered = true;
+        stage.dataset.step = String(next.id);
+        stage.dataset.type = next.type;
+        /* 12–17. Step bar, Prev/Next, scroll Step vào giữa, tool, hint */
+        syncStepUI();
+        updateTools(next);
+        updateHint(next);
+        updateHash(next);
+        return true;
+    } finally {
+        setTimeout(() => { lessonState.isSwitching = false; }, 260);
+    }
+}
+
+/* ---------- Sự kiện điều hướng (một lần duy nhất, không leak listener) ---------- */
+stepsBar.addEventListener('click', e => {
+    const b = e.target.closest('.step');
+    if (b) goToStep(Number(b.dataset.index));
+});
+btnPrev.addEventListener('click', () => goToStep(lessonState.currentStep - 1));
+btnNext.addEventListener('click', () => goToStep(lessonState.currentStep + 1));
+window.addEventListener('keydown', e => {
+    if (!lessonState.entered || e.altKey || e.ctrlKey || e.metaKey) return;
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    const t = e.target;
+    const navTarget = t === document.body || t === document.documentElement ||
+        (t.classList && (t.classList.contains('step') || t.classList.contains('stage-nav')));
+    if (!navTarget || !modal.hidden) return;
+    e.preventDefault();
+    const fromTab = t.classList && t.classList.contains('step');
+    goToStep(lessonState.currentStep + (e.key === 'ArrowRight' ? 1 : -1)).then(ok => {
+        if (ok && fromTab) stepsBar.children[lessonState.currentStep].focus({ preventScroll: true });
+    });
+});
+window.addEventListener('hashchange', () => {
+    const m = /^#step-(\d+)$/.exec(location.hash);
+    if (!m || !lessonState.entered) return;
+    const idx = Number(m[1]) - 1;
+    if (idx === lessonState.currentStep) return;
+    goToStep(idx).then(ok => { if (!ok) updateHash(LESSON_STEPS[lessonState.currentStep]); });
+});
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { VideoPlayer.pause(); if (!voiceEl.paused) voiceEl.pause(); }
+});
+
+/* ---------- Toàn màn hình (không reload video / iframe / interaction) ---------- */
+const btnFullscreen = $('btnFullscreen');
+btnFullscreen.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+        if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {});
+    } else if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+    }
+});
+document.addEventListener('fullscreenchange', () => {
+    const on = !!document.fullscreenElement;
+    btnFullscreen.setAttribute('aria-label', on ? 'Thoát toàn màn hình' : 'Toàn màn hình');
+    btnFullscreen.title = on ? 'Thoát toàn màn hình' : 'Toàn màn hình';
+});
+
+/* ---------- Intro splash: chỉ chờ DOM + font + shell (không preload module) ---------- */
+function bootIntro() {
+    const loader = $('introLoader'), bar = $('introProgressBar'), status = $('introStatus'), btn = $('btnExplore');
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    bar.style.width = '35%';
+    const fonts = (document.fonts && document.fonts.ready) ? Promise.race([document.fonts.ready, wait(2500)]) : Promise.resolve();
+    fonts.then(() => { bar.style.width = '75%'; });
+    Promise.all([fonts, wait(900)]).then(() => {
+        bar.style.width = '100%';
+        status.innerHTML = '<span class="ready-dot"></span>Đã sẵn sàng!';
+        status.classList.add('is-ready');
+        loader.classList.add('ready');
+    });
+    btn.addEventListener('click', () => {
+        if (lessonState.entered) return;
+        userGestured = true;
+        loader.classList.add('leaving');
+        setTimeout(() => { loader.hidden = true; }, 420);
+        lessonState.entered = true;
+        goToStep(0);
+    });
+}
+
+function boot() {
+    renderStepBar();
+    VideoPlayer.init();
+    ModuleBridge.init();
+    syncStepUI();
+    bootIntro();
+    window.YooLesson = { ASSETS, MODULE_MAP, LESSON_STEPS, lessonState, goToStep };
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+else boot();
+
+})();
+</script>
+</body>
+</html>
