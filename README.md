@@ -2,4 +2,4 @@
 
 Một sản phẩm của Yootek, được xây dựng và thực hiện bởi @haisaybai
 <br>
-Update: Không có âm thanh, do đặt các file con trùng tên nên lúc trỏ bị lỗi, quá lười để sửa
+Update: Không có âm thanh, do đặt các file con trùng tên nên lúc trỏ bị lỗi, nào cần thiết sẽ sửa
